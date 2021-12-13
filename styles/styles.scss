@@ -1,5 +1,6 @@
 // Abstracts
 @import "./abstracts/variables";
+@import "./abstracts/mixins";
 
 // Base
 @import "./base/normalize";
@@ -14,3 +15,4 @@
 // Components
 
 // Pages
+@import "./pages/home";

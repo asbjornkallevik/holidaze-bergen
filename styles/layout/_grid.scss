@@ -1,0 +1,26 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 20px;
+
+  // Specified element widths
+  .alignfull {
+    grid-column: 1 / 13;
+  }
+  .alignwide {
+    grid-column: 2 / 12;
+  }
+  .alignhalf {
+    grid-column: 1 / span 6;
+    //   Use grid-column-start to set start column
+  }
+  .alignshort {
+    grid-column: 1 / span 3;
+    //   Use grid-column-start to set start column
+  }
+
+  // Set default alignment
+  > * {
+    @extend .alignwide;
+  }
+}

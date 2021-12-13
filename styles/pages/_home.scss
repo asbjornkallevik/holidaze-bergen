@@ -1,0 +1,14 @@
+.home {
+  h1 {
+    @include hiddenText();
+  }
+  .testBox {
+    background-color: $color-orange;
+    height: 200px;
+  }
+  .testBox2 {
+    background-color: $color-highlight;
+    height: 200px;
+    // grid-column-start: 4;
+  }
+}
