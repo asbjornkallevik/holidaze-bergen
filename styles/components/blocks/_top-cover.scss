@@ -1,0 +1,26 @@
+.top-cover {
+  @extend .alignfull;
+  position: relative;
+  width: 100%;
+
+  background-color: $color-highlight-lighter;
+
+  &--large {
+    height: 100vh;
+  }
+  &--medium {
+    height: 70vh;
+  }
+  &--small {
+    height: 50vh;
+  }
+  &__inner-container {
+    position: absolute;
+    border: 1px dashed red;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+}
