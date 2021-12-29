@@ -22,3 +22,7 @@ h1 {
   @include font-extrabold();
   font-size: 70px;
 }
+a {
+  color: $color-orange;
+  // text-decoration: none;
+}

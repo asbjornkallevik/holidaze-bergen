@@ -2,3 +2,7 @@
   position: absolute;
   text-indent: -1000px;
 }
+
+@mixin headerTransition($duration: 0.4s, $delay: 0s, $prop: all) {
+  transition: $duration $prop ease-in-out $delay;
+}

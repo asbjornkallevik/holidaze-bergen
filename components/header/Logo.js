@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 
+// Clickable SVG logo
 const LogoLink = React.forwardRef(({ href, customClass, tagState }, ref) => {
   return (
     <a href={href} ref={ref}>

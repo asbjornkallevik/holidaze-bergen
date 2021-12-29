@@ -1,4 +1,5 @@
 .page-header {
+  @include headerTransition($duration: 0.4s);
   height: $headerHeight;
   width: 100%;
   position: fixed;
@@ -6,9 +7,28 @@
   white-space: nowrap;
   overflow: hidden;
   color: $color-white;
-  // border: 1px dashed white;
 
+  &__hamburger {
+    position: absolute;
+    z-index: 10;
+    right: 40px;
+    top: calc($headerHeight - ($headerHeight / 1.65));
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    svg {
+      margin-left: 20px;
+      line {
+        transform: translate(0%, 0%) rotate(0deg);
+        opacity: 1;
+        transition: transform 0.5s ease, stroke 0.5s ease;
+
+        stroke: $color-black;
+      }
+    }
+  }
   &__wrapper {
+    @include headerTransition($duration: 0.4s);
     position: relative;
     display: inline-block;
     width: 20%;
@@ -24,15 +44,26 @@
     height: 100%;
     // margin-left: -0.6px;
   }
-  &__nav {
-    /*  position: absolute;
-    width: 25%;
+  &__nav-wrapper {
+    @include headerTransition($duration: 0.4s);
+    position: absolute;
+    width: 0;
     height: 100%;
-    background-color: $color-primary-lighter;
-    z-index: 1; */
+    background-color: $color-primary;
+    top: 0;
+    z-index: 0;
+
+    nav {
+      width: 100%;
+      height: 500px;
+      padding-top: $headerHeight;
+      display: flex;
+      justify-content: center;
+      // border: 1px dashed $color-primary-lighter;
+    }
   }
   &__logo-wrapper {
-    height: 100%;
+    height: $headerHeight;
     // width: 80%;
     position: absolute;
     display: flex;
@@ -52,5 +83,36 @@
     .tag {
       fill: white;
     }
+  }
+  // Navigation menu opens
+  &--active {
+    height: 100vh;
+    .page-header__wrapper {
+      width: 100%;
+      @include headerTransition($duration: 0.8s, $delay: 0.2s);
+    }
+    .page-header__nav-wrapper {
+      width: 100%;
+      @include headerTransition($duration: 0.8s, $delay: 0.2s);
+    }
+    .page-header__hamburger {
+      line {
+        stroke: $color-white;
+        transition: transform 0.5s ease, stroke 0.5s ease 0.4s;
+      }
+      line:nth-child(1) {
+        transform: rotate(45deg) translate(15%, -5%);
+      }
+      line:nth-child(2) {
+        opacity: 0;
+      }
+      line:nth-child(3) {
+        transform: rotate(-45deg) translate(-70%, 0%);
+      }
+    }
+  }
+  a {
+    color: $color-white;
+    text-decoration: none;
   }
 }

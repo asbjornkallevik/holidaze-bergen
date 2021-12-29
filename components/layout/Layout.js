@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Header from "./Header";
+import Header from "../header/Header";
 
 function Layout({ children, page }) {
   return (
