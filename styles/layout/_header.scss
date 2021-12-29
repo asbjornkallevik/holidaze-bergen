@@ -1,5 +1,56 @@
 .page-header {
-  height: 150px;
-  background-color: $color-primary;
+  height: $headerHeight;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
   color: $color-white;
+  // border: 1px dashed white;
+
+  &__wrapper {
+    position: relative;
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    background-color: $color-primary;
+  }
+  &__angle {
+    background: url("../../public/images/triangle.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    // margin-left: -0.6px;
+  }
+  &__nav {
+    /*  position: absolute;
+    width: 25%;
+    height: 100%;
+    background-color: $color-primary-lighter;
+    z-index: 1; */
+  }
+  &__logo-wrapper {
+    height: 100%;
+    // width: 80%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    z-index: 100;
+  }
+  &__logo {
+    height: calc($headerHeight - 30px);
+
+    .text {
+      fill: $color-highlight;
+    }
+    .line {
+      fill: $color-secondary;
+    }
+    .tag {
+      fill: white;
+    }
+  }
 }

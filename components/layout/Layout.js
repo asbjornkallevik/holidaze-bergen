@@ -4,7 +4,7 @@ import Header from "./Header";
 function Layout({ children, page }) {
   return (
     <>
-      {/* <Header page={page} /> */}
+      <Header page={page} />
       <main className={`container ${page}`}>{children}</main>
       <footer className="page-footer">
         <p>Made by Asbj&oslash;rn Kallevik</p>

@@ -13,7 +13,7 @@ export default function Home() {
       <Head />
       <Heading text="Holidaze" size={1} />
       <TopCover img={heroImg} size="large">
-        <p>Testtt</p>
+        {/* <p>Testtt</p> */}
       </TopCover>
       {/* <div className="testBox"></div> */}
       {/* <div className="testBox2 alignshort"></div> */}
