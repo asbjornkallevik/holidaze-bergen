@@ -18,10 +18,10 @@ function Header() {
             <li className="menu__item">
               <Link href="/">Home</Link>
             </li>
-            <li className="menu__item">Two</li>
-            <li className="menu__item">Three</li>
-            <li className="menu__item">Føør</li>
-            <li className="menu__item">gdf</li>
+            <li className="menu__item">Accommodations</li>
+            <li className="menu__item">About us</li>
+            <li className="menu__item">Contact</li>
+            <li className="menu__item">Log in</li>
           </ul>
         </nav>
       </div>
