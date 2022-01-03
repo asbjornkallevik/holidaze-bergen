@@ -17,6 +17,8 @@
   &__inner-container {
     position: absolute;
     border: 1px dashed red;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: $color-highlight;
     top: 0;
     bottom: 0;
     left: 0;

@@ -18,5 +18,18 @@ $color-highlight-lighter: $color-yellow-lighter;
 $color-secondary: $color-orange;
 $color-tertiary: $color-green;
 
+// Fonts
+/* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1200,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+
+$font-step--2: clamp(0.69rem, 0.66rem + 0.19vw, 0.8rem);
+$font-step--1: clamp(0.83rem, 0.77rem + 0.3vw, 1rem);
+$font-step-0: clamp(1rem, 0.91rem + 0.45vw, 1.25rem);
+$font-step-1: clamp(1.2rem, 1.07rem + 0.66vw, 1.56rem);
+$font-step-2: clamp(1.44rem, 1.25rem + 0.93vw, 1.95rem);
+$font-step-3: clamp(1.73rem, 1.47rem + 1.3vw, 2.44rem);
+$font-step-4: clamp(2.07rem, 1.72rem + 1.78vw, 3.05rem);
+$font-step-5: clamp(2.49rem, 2.01rem + 2.41vw, 3.82rem);
+$font-step-6: clamp(2.99rem, 2.34rem + 3.24vw, 4.77rem);
+
 // Dimensions
 $headerHeight: 150px;

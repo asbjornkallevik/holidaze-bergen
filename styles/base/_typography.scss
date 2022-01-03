@@ -16,13 +16,33 @@
 }
 body {
   @include font-regular();
+  font-size: $font-step-0;
 }
-
-h1 {
+%heading {
   @include font-extrabold();
-  font-size: 70px;
+  text-transform: uppercase;
+}
+h1 {
+  @extend %heading;
+  font-size: $font-step-6;
+}
+h2 {
+  @extend %heading;
+  font-size: $font-step-4;
+}
+h3 {
+  @extend %heading;
+  font-size: $font-step-3;
+}
+h4 {
+  @extend %heading;
+  font-size: $font-step-1;
 }
 a {
   color: $color-orange;
   // text-decoration: none;
+}
+.menu__item {
+  @include font-thin();
+  font-size: $font-step-3;
 }
