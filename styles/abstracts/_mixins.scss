@@ -2,7 +2,25 @@
   position: absolute;
   text-indent: -1000px;
 }
-
+// Transitions
 @mixin headerTransition($duration: 0.4s, $delay: 0s, $prop: all) {
   transition: $duration $prop ease-in-out $delay;
+}
+@mixin transitionHover($prop: all) {
+  transition: 0.6s $prop ease-in-out;
+}
+
+// Button height settings
+@mixin buttonHeight($height: 42px) {
+  height: $height;
+  margin-right: $height; // To make up for ::after position absolute
+}
+@mixin buttonHeightAfter($height: 42px) {
+  border-top-style: solid;
+  border-top-color: inherit;
+  border-right-style: solid;
+  border-right-color: transparent;
+  border-top-width: $height;
+  border-right-width: $height;
+  right: calc($height * -1);
 }

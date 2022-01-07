@@ -13,7 +13,12 @@
 @import "./layout/footer";
 
 // Components
+@import "./components/blocks/buttons";
 @import "./components/navigation";
 @import "./components/blocks/top-cover";
+@import "./components/blocks/feature-label";
+@import "./components/blocks/card";
+
 // Pages
 @import "./pages/home";
+@import "./pages/accommodation";

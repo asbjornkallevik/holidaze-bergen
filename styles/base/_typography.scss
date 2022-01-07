@@ -25,6 +25,7 @@ body {
 h1 {
   @extend %heading;
   font-size: $font-step-6;
+  text-align: center;
 }
 h2 {
   @extend %heading;
@@ -37,10 +38,15 @@ h3 {
 h4 {
   @extend %heading;
   font-size: $font-step-1;
+  margin: 10px 0;
 }
 a {
   color: $color-orange;
   // text-decoration: none;
+}
+.btn {
+  @include font-bold();
+  font-size: $font-step-0;
 }
 .menu__item {
   @include font-thin();

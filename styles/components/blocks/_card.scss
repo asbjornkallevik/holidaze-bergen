@@ -1,0 +1,75 @@
+.card {
+  // border: 1px dashed salmon;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: 280px;
+  padding: 24px;
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  &__background {
+    @include transitionHover();
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    white-space: nowrap;
+
+    &-color {
+      @include transitionHover();
+      display: inline-block;
+      background-color: $color-primary-lighter;
+      width: 0;
+      height: 100%;
+    }
+    &-triangle {
+      display: inline-block;
+      height: 100%;
+
+      .triangleSVG {
+        fill: $color-primary-lighter;
+        height: 100%;
+      }
+    }
+  }
+
+  &__header {
+    position: relative;
+    width: 340px;
+  }
+  &__body {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+
+    padding: 4px 20px;
+  }
+  &__excerpt {
+    height: 100%;
+    font-size: $font-step--2;
+  }
+  &__features {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__footer {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-end;
+  }
+
+  &:hover {
+    .card__background {
+      height: 100%;
+    }
+    .card__background-color {
+      width: 100%;
+    }
+  }
+}

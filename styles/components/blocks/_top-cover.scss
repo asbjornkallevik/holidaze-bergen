@@ -16,9 +16,13 @@
   }
   &__inner-container {
     position: absolute;
-    border: 1px dashed red;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: $headerHeight;
+    // Overlay
     background-color: rgba(0, 0, 0, 0.3);
-    color: $color-highlight;
+    color: $color-white;
     top: 0;
     bottom: 0;
     left: 0;
