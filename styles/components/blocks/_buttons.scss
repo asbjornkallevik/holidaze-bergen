@@ -1,0 +1,95 @@
+.btn {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  line-height: 1;
+  @include buttonHeight($buttonHeightStandard);
+  @include transitionHover();
+  background-color: $color-white;
+  border-top-color: $color-white;
+
+  &:hover {
+    background-color: darken($color-white, 15%);
+    border-top-color: darken($color-white, 15%);
+  }
+
+  &::after {
+    content: "";
+    @include buttonHeightAfter($buttonHeightStandard);
+    // @include transitionHover();
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  &--primary {
+    @extend .btn;
+    color: $color-white;
+    background-color: $color-primary;
+    border-top-color: $color-primary;
+    &:hover {
+      background-color: darken($color-primary, 15%);
+      border-top-color: darken($color-primary, 15%);
+    }
+    &::after {
+      content: "";
+      @include buttonHeightAfter($buttonHeightStandard);
+    }
+  }
+  &--secondary {
+    @extend .btn;
+    background-color: $color-secondary;
+    border-top-color: $color-secondary;
+    &:hover {
+      background-color: darken($color-secondary, 15%);
+      border-top-color: darken($color-secondary, 15%);
+    }
+    &::after {
+      content: "";
+      @include buttonHeightAfter($buttonHeightStandard);
+    }
+  }
+
+  &--highlight {
+    @extend .btn;
+    background-color: $color-highlight;
+    border-top-color: $color-highlight;
+    &:hover {
+      background-color: darken($color-highlight, 20%);
+      border-top-color: darken($color-highlight, 20%);
+    }
+    &::after {
+      content: "";
+      @include buttonHeightAfter($buttonHeightStandard);
+    }
+  }
+  &--success {
+    @extend .btn;
+    background-color: $color-tertiary;
+    border-top-color: $color-tertiary;
+    &:hover {
+      background-color: darken($color-tertiary, 15%);
+      border-top-color: darken($color-tertiary, 15%);
+    }
+    &::after {
+      content: "";
+      @include buttonHeightAfter($buttonHeightStandard);
+    }
+  }
+  &--grey {
+    @extend .btn;
+    background-color: darken($color-white, 15%);
+    border-top-color: darken($color-white, 15%);
+    &:hover {
+      background-color: darken($color-white, 30%);
+      border-top-color: darken($color-white, 30%);
+    }
+    &::after {
+      content: "";
+      @include buttonHeightAfter($buttonHeightStandard);
+    }
+  }
+}
