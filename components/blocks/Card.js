@@ -6,9 +6,10 @@ import Image from "next/image";
 import dummyImg from "../..//public/images/dummy-img.jpg";
 
 function Card(props) {
-  console.log(props);
+  const cardClass = props.layoutWide ? "card card--wide" : "card";
+
   return (
-    <div className="card">
+    <div className={cardClass}>
       <div className="card__background">
         <div className="card__background-color"></div>
         <div className="card__background-triangle">
@@ -16,15 +17,19 @@ function Card(props) {
         </div>
       </div>
       <div className="card__header">
-        <Image src={dummyImg} layout="fill" objectFit="cover" alt="Hotel" />
+        <Image
+          src={props.imageUrl}
+          layout="fill"
+          objectFit="cover"
+          alt="Hotel"
+        />
       </div>
       <div className="card__body">
-        <Heading text="Hotel Lorum" size={4} />
-        <p className="card__excerpt">
-          This is a nice little hotel in the centre of Bergen. At Hotel Lorem
-          you can relax and stay warm at night, after your numerous adventures
-          during daytime.
-        </p>
+        <Heading text={props.title} size={4} />
+        <div
+          className="card__excerpt"
+          dangerouslySetInnerHTML={{ __html: props.excerpt }}
+        ></div>
         <div className="card__features">
           <div className="feature-label">Free WiFi</div>
           <div className="feature-label">Parking</div>
@@ -40,7 +45,10 @@ function Card(props) {
 }
 
 Card.propTypes = {
-  test: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  excerpt: PropTypes.string,
+  imageUrl: PropTypes.string,
+  layoutWide: PropTypes.bool,
 };
 
 export default Card;
