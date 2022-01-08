@@ -1,5 +1,9 @@
 // import { useState } from "react";
-import { API_URL } from "../constants/api";
+import {
+  API_URL,
+  ACCOMMODATION_ENDPOINT,
+  MEDIA_ENDPOINT,
+} from "../constants/api";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Head from "../components/layout/Head";
@@ -39,12 +43,13 @@ export default function accommodations(props) {
 }
 
 export async function getStaticProps() {
-  const url = API_URL + "accommodation";
+  const itemUrl = API_URL + ACCOMMODATION_ENDPOINT;
+  const mediaUrl = API_URL + MEDIA_ENDPOINT;
   let data = [];
   let items = [];
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(itemUrl);
     data = response.data;
     console.log(data);
 
@@ -53,7 +58,7 @@ export async function getStaticProps() {
 
       // Get image if it exists
       if (data[i].featured_media) {
-        imageUrl = await axios.get(API_URL + "media/" + data[i].featured_media);
+        imageUrl = await axios.get(mediaUrl + data[i].featured_media);
         imageUrl = imageUrl.data.source_url;
       }
 
