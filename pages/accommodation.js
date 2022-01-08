@@ -13,8 +13,9 @@ import Card from "../components/blocks/Card";
 
 export default function accommodations(props) {
   console.log(props);
+  const pageSlug = "accommodation";
   return (
-    <Layout page="accommodation">
+    <Layout page={pageSlug}>
       <Head title="Accommodation" />
       <TopCover img={heroImg} size="small">
         <Heading text="Accommodation" size={1} />
@@ -25,7 +26,8 @@ export default function accommodations(props) {
           return (
             <Card
               layoutWide={true}
-              key={item.title}
+              key={item.slug}
+              slug={`/${pageSlug}/${item.slug}`}
               title={item.title}
               excerpt={item.excerpt}
               imageUrl={item.imageUrl}
@@ -45,6 +47,7 @@ export async function getStaticProps() {
   try {
     const response = await axios.get(url);
     data = response.data;
+    console.log(data);
 
     for (let i = 0; i < data.length; i++) {
       let imageUrl = "";
@@ -53,11 +56,11 @@ export async function getStaticProps() {
       if (data[i].featured_media) {
         imageUrl = await axios.get(API_URL + "media/" + data[i].featured_media);
         imageUrl = imageUrl.data.source_url;
-        console.log(imageUrl);
       }
 
       items.push({
         title: data[i].title.rendered,
+        slug: data[i].slug,
         excerpt: data[i].excerpt.rendered,
         imageUrl: imageUrl,
       });

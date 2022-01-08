@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 
 function Button({ text, type, link, id }) {
-  const btnClass = type ? `btn--${type}` : "btn";
+  const btnClass = type ? `btn btn--${type}` : "btn";
 
   return (
-    <Link href={link}>
-      <div className={btnClass} id={id}>
+    <Link href={link} passHref>
+      <a className={btnClass} id={id}>
         {text}
-      </div>
+      </a>
     </Link>
   );
 }

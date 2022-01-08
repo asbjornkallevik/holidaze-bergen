@@ -1,5 +1,6 @@
 .btn {
   cursor: pointer;
+  text-decoration: none;
   position: relative;
   display: flex;
   align-items: center;
@@ -41,6 +42,7 @@
   }
   &--secondary {
     @extend .btn;
+    color: $color-black;
     background-color: $color-secondary;
     border-top-color: $color-secondary;
     &:hover {
@@ -55,6 +57,7 @@
 
   &--highlight {
     @extend .btn;
+    color: $color-black;
     background-color: $color-highlight;
     border-top-color: $color-highlight;
     &:hover {
@@ -68,6 +71,7 @@
   }
   &--success {
     @extend .btn;
+    color: $color-black;
     background-color: $color-tertiary;
     border-top-color: $color-tertiary;
     &:hover {
@@ -81,6 +85,7 @@
   }
   &--grey {
     @extend .btn;
+    color: $color-black;
     background-color: darken($color-white, 15%);
     border-top-color: darken($color-white, 15%);
     &:hover {
