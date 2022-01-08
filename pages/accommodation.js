@@ -3,7 +3,6 @@ import { API_URL } from "../constants/api";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Head from "../components/layout/Head";
-import Link from "next/link";
 
 import Heading from "../components/typography/Heading";
 
