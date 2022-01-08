@@ -38,7 +38,7 @@ function Card(props) {
         </div>
       </div>
       <div className="card__footer">
-        <Button text="View more" type="grey" link={props.slug} />
+        <Button text="View more" type="highlight" link={props.slug} />
       </div>
     </div>
   );
