@@ -30,6 +30,7 @@ export default function accommodations(props) {
             <Card
               layoutWide={true}
               key={item.slug}
+              id={item.id}
               slug={`/${pageSlug}/${item.slug}`}
               title={item.title}
               excerpt={item.excerpt}
@@ -63,6 +64,7 @@ export async function getStaticProps() {
       }
 
       items.push({
+        id: data[i].id,
         title: data[i].title.rendered,
         slug: data[i].slug,
         excerpt: data[i].excerpt.rendered,
