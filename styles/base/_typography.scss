@@ -40,6 +40,11 @@ h4 {
   font-size: $font-step-1;
   margin: 10px 0;
 }
+h5 {
+  @extend %heading;
+  font-size: $font-step--1;
+  margin: 10px 0 4px;
+}
 a {
   color: $color-orange;
   // text-decoration: none;

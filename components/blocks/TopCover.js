@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function TopCover({ children, img, size }) {
   return (
-    <div className={`top-cover top-cover--${size}`}>
+    <div className={`top-cover top-cover--${size} alignfull`}>
       <Image
         src={img}
         layout="fill"
@@ -20,7 +20,7 @@ function TopCover({ children, img, size }) {
 TopCover.propTypes = {
   children: PropTypes.node,
   size: PropTypes.string,
-  img: PropTypes.object,
+  img: PropTypes.string,
 };
 
 export default TopCover;

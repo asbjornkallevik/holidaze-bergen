@@ -2,6 +2,13 @@
   position: absolute;
   text-indent: -1000px;
 }
+// Alignment
+@mixin alignshort($start: 1) {
+  grid-column: $start / span 4;
+}
+@mixin alignhalf($start: 1) {
+  grid-column: $start / span 6;
+}
 // Transitions
 @mixin headerTransition($duration: 0.4s, $delay: 0s, $prop: all) {
   transition: $duration $prop ease-in-out $delay;

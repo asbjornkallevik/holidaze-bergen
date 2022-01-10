@@ -9,15 +9,42 @@ import Head from "../../components/layout/Head";
 
 import TopCover from "../../components/blocks/TopCover";
 import Heading from "../../components/typography/Heading";
+import Rooms from "../../components/accommodation/Rooms";
+import Facilities from "../../components/accommodation/Facilities";
 
 export default function Slug(props) {
-  console.log(props.item);
+  const hotel = props.item;
+  console.log(hotel.facilities);
   return (
-    <Layout>
-      <Head title="Single page" />
-      <TopCover img={props.item.imageUrl} size="medium">
-        <Heading text={props.item.title} size={1} />
+    <Layout page="single-page">
+      <Head title={hotel.title} />
+      <TopCover img={hotel.imageUrl} size="medium">
+        <Heading text={hotel.title} size={1} />
       </TopCover>
+
+      <section className="single-page__details ">
+        <div className="single-page__rooms">
+          <Rooms items={hotel.rooms} />
+        </div>
+
+        <div className="single-page__facilities">
+          <Heading text="Facilities" size={4} />
+          <Facilities items={hotel.facilities} />
+        </div>
+        <div className="single-page__location">
+          <Heading text="Location" size={4} />
+          Address...
+        </div>
+      </section>
+      <section className="single-page__image-carousel"></section>
+      <section className="single-page__content">
+        <Heading
+          text={`This is ${hotel.title}`}
+          size={2}
+          customClass="single-page__content-heading"
+        />
+        <div dangerouslySetInnerHTML={{ __html: hotel.content }}></div>
+      </section>
     </Layout>
   );
 }
@@ -62,7 +89,10 @@ export async function getStaticProps({ params }) {
 
     item = {
       title: data[0].title.rendered,
+      content: data[0].content.rendered,
       imageUrl: imageUrl,
+      rooms: data[0].acf.accommodation_rooms,
+      facilities: data[0].acf.accommodation_facilities,
     };
   } catch (error) {
   } finally {

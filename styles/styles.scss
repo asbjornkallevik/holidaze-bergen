@@ -15,10 +15,15 @@
 // Components
 @import "./components/blocks/buttons";
 @import "./components/navigation";
+
+@import "./components/accommodation/room";
+@import "./components/accommodation/facility";
+
 @import "./components/blocks/top-cover";
-@import "./components/blocks/feature-label";
 @import "./components/blocks/card";
+@import "./components/blocks/image-carousel";
 
 // Pages
 @import "./pages/home";
 @import "./pages/accommodation";
+@import "./pages/single-page";

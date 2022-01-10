@@ -20,7 +20,7 @@ export default function accommodations(props) {
   return (
     <Layout page={pageSlug}>
       <Head title="Accommodation" />
-      <TopCover img={heroImg} size="small">
+      <TopCover img={heroImg.src} size="small">
         <Heading text="Accommodation" size={1} />
       </TopCover>
 
@@ -35,6 +35,7 @@ export default function accommodations(props) {
               title={item.title}
               excerpt={item.excerpt}
               imageUrl={item.imageUrl}
+              facilities={item.facilities}
             />
           );
         })}
@@ -52,7 +53,6 @@ export async function getStaticProps() {
   try {
     const response = await axios.get(itemUrl);
     data = response.data;
-    console.log(data);
 
     for (let i = 0; i < data.length; i++) {
       let imageUrl = "";
@@ -63,12 +63,14 @@ export async function getStaticProps() {
         imageUrl = imageUrl.data.source_url;
       }
 
+      console.log(data[i].acf.accommodation_facilities);
       items.push({
         id: data[i].id,
         title: data[i].title.rendered,
         slug: data[i].slug,
         excerpt: data[i].excerpt.rendered,
         imageUrl: imageUrl,
+        facilities: data[i].acf.accommodation_facilities,
       });
     }
   } catch (error) {

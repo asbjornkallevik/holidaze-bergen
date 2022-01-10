@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Heading from "../typography/Heading";
 import Button from "./Button";
+import Facilities from "../accommodation/Facilities";
 import Triangle from "../layout/Triangle";
 import Image from "next/image";
 import dummyImg from "../..//public/images/dummy-img.jpg";
@@ -30,11 +31,8 @@ function Card(props) {
           className="card__excerpt"
           dangerouslySetInnerHTML={{ __html: props.excerpt }}
         ></div>
-        <div className="card__features">
-          <div className="feature-label">Free WiFi</div>
-          <div className="feature-label">Parking</div>
-          <div className="feature-label">Breakfast included</div>
-          <div className="feature-label">King size bed</div>
+        <div className="card__facilities">
+          <Facilities items={props.facilities} />
         </div>
       </div>
       <div className="card__footer">
@@ -45,8 +43,11 @@ function Card(props) {
 }
 
 Card.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string.isRequired,
   excerpt: PropTypes.string,
+  slug: PropTypes.string,
+  facilities: PropTypes.array,
   imageUrl: PropTypes.string,
   layoutWide: PropTypes.bool,
 };

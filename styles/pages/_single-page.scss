@@ -1,0 +1,25 @@
+.single-page {
+  &__details {
+    @include alignshort($start: 2);
+    background-color: $color-highlight-lighter;
+
+    > *:not(:first-child) {
+      margin-top: 24px;
+    }
+  }
+  &__content-heading {
+    margin-bottom: 0;
+  }
+  &__content {
+    p {
+      // margin: 0;
+    }
+  }
+
+  &__image-carousel {
+    @include alignhalf($start: 6);
+
+    background-color: grey;
+    // height: 400px;
+  }
+}
