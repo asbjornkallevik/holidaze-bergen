@@ -8,13 +8,14 @@ import Layout from "../../components/layout/Layout";
 import Head from "../../components/layout/Head";
 
 import TopCover from "../../components/blocks/TopCover";
+import ImageCarousel from "../../components/blocks/ImageCarousel";
 import Heading from "../../components/typography/Heading";
 import Rooms from "../../components/accommodation/Rooms";
 import Facilities from "../../components/accommodation/Facilities";
 
 export default function Slug(props) {
   const hotel = props.item;
-  console.log(hotel.facilities);
+
   return (
     <Layout page="single-page">
       <Head title={hotel.title} />
@@ -36,7 +37,9 @@ export default function Slug(props) {
           Address...
         </div>
       </section>
-      <section className="single-page__image-carousel"></section>
+      <section className="single-page__image-carousel">
+        <ImageCarousel images={hotel.imageGallery} />
+      </section>
       <section className="single-page__content">
         <Heading
           text={`This is ${hotel.title}`}
@@ -52,7 +55,6 @@ export default function Slug(props) {
 export async function getStaticPaths() {
   try {
     const response = await axios.get(API_URL + "accommodation");
-    console.log(response.data);
 
     const accommodation = response.data;
 
@@ -60,8 +62,6 @@ export async function getStaticPaths() {
     const paths = accommodation.map((item) => ({
       params: { slug: item.slug },
     }));
-
-    console.log(paths);
 
     return { paths: paths, fallback: false };
   } catch (error) {
@@ -75,16 +75,26 @@ export async function getStaticProps({ params }) {
   let data = [];
   let item = {};
   let imageUrl = "";
+  let imageGallery = [];
   // console.log("params", params.id);
   try {
     const response = await axios.get(itemUrl);
     data = response.data;
-    console.log(data);
+    // console.log(data);
 
     // Get image if it exists
     if (data[0].featured_media) {
       imageUrl = await axios.get(mediaUrl + data[0].featured_media);
       imageUrl = imageUrl.data.source_url;
+    }
+
+    // Get image gallery
+    const gallery_items = data[0].acf.accommodation_image_gallery;
+    if (gallery_items.length > 0) {
+      for (let i = 0; i < gallery_items.length; i++) {
+        const imageUrl = await axios.get(mediaUrl + gallery_items[i]);
+        imageGallery.push(imageUrl.data.source_url);
+      }
     }
 
     item = {
@@ -93,6 +103,7 @@ export async function getStaticProps({ params }) {
       imageUrl: imageUrl,
       rooms: data[0].acf.accommodation_rooms,
       facilities: data[0].acf.accommodation_facilities,
+      imageGallery: imageGallery,
     };
   } catch (error) {
   } finally {

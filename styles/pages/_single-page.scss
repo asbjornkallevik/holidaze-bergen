@@ -1,4 +1,7 @@
 .single-page {
+  .top-cover {
+    margin-bottom: 20px;
+  }
   &__details {
     @include alignshort($start: 2);
     background-color: $color-highlight-lighter;
@@ -19,7 +22,7 @@
   &__image-carousel {
     @include alignhalf($start: 6);
 
-    background-color: grey;
+    // background-color: grey;
     // height: 400px;
   }
 }

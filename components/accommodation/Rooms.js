@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import Heading from "../typography/Heading";
 
 export default function Rooms({ items }) {
-  console.log(items);
   return (
     <>
       <Heading text="Rooms" size={4} />
