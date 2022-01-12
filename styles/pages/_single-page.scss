@@ -4,7 +4,7 @@
   }
   &__details {
     @include alignshort($start: 2);
-    background-color: $color-highlight-lighter;
+    // background-color: $color-highlight-lighter;
 
     > *:not(:first-child) {
       margin-top: 24px;

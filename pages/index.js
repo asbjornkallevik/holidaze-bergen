@@ -12,7 +12,7 @@ export default function Home() {
     <Layout page="home">
       <Head />
       <Heading text="Holidaze" size={1} />
-      <TopCover img={heroImg} size="large"></TopCover>
+      <TopCover img={heroImg.src} size="large"></TopCover>
 
       <Heading text="Heading 2" size={2} />
       <p>

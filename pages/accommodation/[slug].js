@@ -76,7 +76,7 @@ export async function getStaticProps({ params }) {
   let item = {};
   let imageUrl = "";
   let imageGallery = [];
-  // console.log("params", params.id);
+
   try {
     const response = await axios.get(itemUrl);
     data = response.data;
