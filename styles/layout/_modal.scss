@@ -1,0 +1,54 @@
+.modal {
+  position: fixed;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba($color-black, 0.95);
+  margin-top: 100vh;
+
+  @include transitionModal();
+  display: flex;
+  opacity: 0;
+
+  //   overflow: auto;
+
+  &__dialog {
+    margin-top: 20px;
+    // margin-bottom: 20px;
+    width: 75%;
+    // height: 400px;
+    background-color: $color-white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  &__header {
+    position: relative;
+    background-color: $color-primary-lighter;
+    padding: 40px 10px 10px;
+  }
+  &__close#modalClose {
+    position: absolute;
+    top: 0;
+    right: calc($buttonHeightStandard * -1 - 1px);
+    transform: rotate(360deg) scaleX(-1);
+
+    &::after {
+      border-right-width: calc($buttonHeightStandard + 1px);
+    }
+  }
+  &__heading {
+    margin: 0;
+    text-align: center;
+  }
+  &.open {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+
+// Helpers
+
+.modal-open {
+  overflow: hidden;
+}

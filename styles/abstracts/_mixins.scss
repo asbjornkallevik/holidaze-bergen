@@ -16,6 +16,9 @@
 @mixin transitionHover($prop: all) {
   transition: 0.6s $prop ease-in-out;
 }
+@mixin transitionModal($prop: all) {
+  transition: 0.4s $prop ease-in-out;
+}
 
 // Button height settings
 @mixin buttonHeight($height: 42px) {

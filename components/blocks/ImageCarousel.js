@@ -5,7 +5,6 @@ import { Navigation, Pagination } from "swiper";
 import Image from "next/image";
 
 export default function ImageCarousel({ images }) {
-  console.log("Component images: ", images);
   return (
     <Swiper
       className="image-carousel"

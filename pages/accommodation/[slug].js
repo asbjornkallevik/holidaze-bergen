@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   API_URL,
   ACCOMMODATION_ENDPOINT,
@@ -10,11 +11,38 @@ import Head from "../../components/layout/Head";
 import TopCover from "../../components/blocks/TopCover";
 import ImageCarousel from "../../components/blocks/ImageCarousel";
 import Heading from "../../components/typography/Heading";
+import ButtonLink from "../../components/blocks/ButtonLink";
+import Button from "../../components/blocks/Button";
 import Rooms from "../../components/accommodation/Rooms";
 import Facilities from "../../components/accommodation/Facilities";
+import HotelRequestForm from "../../components/forms/HotelRequestForm";
+import Modal from "../../components/layout/Modal";
 
 export default function Slug(props) {
   const hotel = props.item;
+
+  useEffect(function () {
+    const sendRequestBtn = document.querySelector("#sendHotelRequest");
+    const modalCloseBtn = document.querySelector("#modalClose");
+    const modal = document.querySelector(".modal");
+
+    // Open and close modal
+    if (modal) {
+      sendRequestBtn.addEventListener("click", () => {
+        modal.classList.add("open");
+      });
+      modalCloseBtn.addEventListener("click", () => {
+        modal.classList.remove("open");
+      });
+      modal.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal")) {
+          modal.classList.remove("open");
+        }
+      });
+    }
+
+    // Add and remove class '.modal-open' when modal opens/closes
+  }, []);
 
   return (
     <Layout page="single-page">
@@ -27,7 +55,14 @@ export default function Slug(props) {
         <div className="single-page__rooms">
           <Rooms items={hotel.rooms} />
         </div>
-
+        <div>
+          <Button
+            text="Send request"
+            style="success"
+            id="sendHotelRequest"
+            short
+          />
+        </div>
         <div className="single-page__facilities">
           <Heading text="Facilities" size={4} />
           <Facilities items={hotel.facilities} />
@@ -48,6 +83,10 @@ export default function Slug(props) {
         />
         <div dangerouslySetInnerHTML={{ __html: hotel.content }}></div>
       </section>
+      {/* Modal */}
+      <Modal title={`Send a request to ${hotel.title}`}>
+        <HotelRequestForm hotel={hotel} API_URL={props.API_URL} />
+      </Modal>
     </Layout>
   );
 }
@@ -98,6 +137,7 @@ export async function getStaticProps({ params }) {
     }
 
     item = {
+      id: data[0].id,
       title: data[0].title.rendered,
       content: data[0].content.rendered,
       imageUrl: imageUrl,
@@ -111,6 +151,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       item: item,
+      API_URL: API_URL,
     },
   };
 }

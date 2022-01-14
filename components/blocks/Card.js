@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Heading from "../typography/Heading";
-import Button from "./Button";
+import ButtonLink from "./ButtonLink";
 import Facilities from "../accommodation/Facilities";
 import Triangle from "../layout/Triangle";
 import Image from "next/image";
@@ -36,7 +36,7 @@ function Card(props) {
         </div>
       </div>
       <div className="card__footer">
-        <Button text="View more" type="highlight" link={props.slug} />
+        <ButtonLink text="View more" style="highlight" link={props.slug} />
       </div>
     </div>
   );

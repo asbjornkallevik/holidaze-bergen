@@ -1,3 +1,7 @@
+button {
+  border: none;
+}
+
 .btn {
   cursor: pointer;
   text-decoration: none;
@@ -25,7 +29,9 @@
     position: absolute;
     top: 0;
   }
-
+  &--short {
+    display: inline-flex;
+  }
   &--primary {
     @extend .btn;
     color: $color-white;

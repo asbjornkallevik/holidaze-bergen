@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Link from "next/link";
 
 /* ---
 Button styles:
@@ -9,29 +10,31 @@ Button styles:
 -grey 
 --- */
 
-function Button({ text, style, id, short, customClass, type }) {
+function ButtonLink({ text, style, link, id, short, customClass }) {
   let btnClass = style ? `btn btn--${style}` : "btn";
   btnClass += short ? " btn--short" : "";
   btnClass += customClass ? " " + customClass : "";
 
   return (
-    <button className={btnClass} id={id} type={type}>
-      {text}
-    </button>
+    <Link href={link} passHref>
+      <a className={btnClass} id={id} type="submit">
+        {text}
+      </a>
+    </Link>
   );
 }
 
-Button.propTypes = {
+ButtonLink.propTypes = {
   text: PropTypes.string,
   style: PropTypes.string,
+  link: PropTypes.string,
   id: PropTypes.string,
   short: PropTypes.bool,
   customClass: PropTypes.string,
-  type: PropTypes.string,
 };
 
-Button.defaultProps = {
+ButtonLink.defaultProps = {
   text: "Read more",
-  type: "button",
+  link: "",
 };
-export default Button;
+export default ButtonLink;
