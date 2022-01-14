@@ -77,7 +77,8 @@
     // position: fixed;
     bottom: 40px;
     right: 20px;
-    opacity: 1;
+    opacity: 0;
+    @include transitionModal($prop: opacity);
   }
   /* @media (max-width: 999px) {
     width: 90%;

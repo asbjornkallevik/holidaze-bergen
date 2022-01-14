@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-  API_URL,
-  ACCOMMODATION_ENDPOINT,
-  MEDIA_ENDPOINT,
-} from "../../constants/api";
+import { API } from "../../constants/api";
 import axios from "axios";
 import Layout from "../../components/layout/Layout";
 import Head from "../../components/layout/Head";
@@ -85,7 +81,7 @@ export default function Slug(props) {
       </section>
       {/* Modal */}
       <Modal title={`Send a request to ${hotel.title}`}>
-        <HotelRequestForm hotel={hotel} API_URL={props.API_URL} />
+        <HotelRequestForm hotel={hotel} API={props.API} />
       </Modal>
     </Layout>
   );
@@ -93,7 +89,7 @@ export default function Slug(props) {
 
 export async function getStaticPaths() {
   try {
-    const response = await axios.get(API_URL + "accommodation");
+    const response = await axios.get(API.API_URL + "accommodation");
 
     const accommodation = response.data;
 
@@ -109,8 +105,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const itemUrl = API_URL + ACCOMMODATION_ENDPOINT + `?slug=${params.slug}`;
-  const mediaUrl = API_URL + MEDIA_ENDPOINT;
+  const itemUrl =
+    API.API_URL + API.ACCOMMODATION_ENDPOINT + `?slug=${params.slug}`;
+  const mediaUrl = API.API_URL + API.MEDIA_ENDPOINT;
   let data = [];
   let item = {};
   let imageUrl = "";
@@ -151,7 +148,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       item: item,
-      API_URL: API_URL,
+      API: API,
     },
   };
 }

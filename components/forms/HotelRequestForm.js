@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
 
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { REQUESTS_ENDPOINT } from "../../constants/api";
-import axios from "axios";
-import useAxios from "../../hooks/useAxios";
 
 import Button from "../blocks/Button";
 
@@ -25,19 +24,36 @@ const schema = yup.object().shape({
   checkOut: yup.string().required("Please select a check-out date"),
 });
 
-export default function HotelRequestForm({ hotel, API_URL }) {
+export default function HotelRequestForm({ hotel, API }) {
+  const requestUrl = API.API_URL + API.REQUESTS_ENDPOINT;
+  const authUrl = API.API_BASE_URL + API.TOKEN_PATH;
+
   const [auth, setAuth] = useContext(AuthContext);
   const http = useAxios();
-  const url = API_URL + REQUESTS_ENDPOINT;
+
   let rooms = "";
 
-  // console.log(url);
+  // Authorize guest user to send messages to API
+  async function guestAuth(guest) {
+    try {
+      const response = await axios.post(authUrl, guest).then((response) => {
+        setAuth(response.data);
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+  // Check authorization
+  if (!auth) {
+    guestAuth(API.GUEST_USER);
+  }
 
   // DOM manipulation
   useEffect(function () {
     const selectRooms = document.querySelector("#room");
 
     // Create hotel room options
+    selectRooms.innerHTML = "";
     for (let i = 0; i < hotel.rooms.length; i++) {
       const option = document.createElement("option");
 
@@ -45,6 +61,10 @@ export default function HotelRequestForm({ hotel, API_URL }) {
       option.innerHTML = `${hotel.rooms[i].accommodation_rooms_name}, NOK ${hotel.rooms[i].accommodation_rooms_price},- per night`;
 
       selectRooms.appendChild(option);
+    }
+
+    function testMe() {
+      console.log("tested");
     }
   }, []);
 
@@ -55,22 +75,46 @@ export default function HotelRequestForm({ hotel, API_URL }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   async function onSubmit(data) {
-    console.log(url);
     console.log(data);
+
+    const roomName = data.room
+      ? hotel.rooms[parseInt(data.room)].accommodation_rooms_name
+      : hotel.rooms[0].accommodation_rooms_name;
 
     const hotelRequest = {
       title: `${hotel.title}: ${data.name} has sent a room request`,
+      content: data.content,
+      status: "publish",
+      acf: {
+        request_hotel_id: hotel.id.toString(),
+        request_name: data.name,
+        request_email: data.email,
+        request_check_in: data.checkIn,
+        request_check_out: data.checkOut,
+        request_room_name: roomName,
+        request_adults: data.guestsAdults,
+        request_children: data.guestsChildren,
+        request_message: data.message,
+      },
     };
 
     try {
-      setAuth({ username: "appexdev", password: "appexdev" });
-      const response = await http.post(url, hotelRequest);
-      console.log(auth);
+      const form = document.querySelector(".form");
+      const formSuccess = document.querySelector(".form-success");
+      const response = await http
+        .post(requestUrl, hotelRequest)
+        .then((response) => {
+          if (response.status === 201) {
+            // Show success confirmation text
+            // formSuccess.style.opacity = 1; funker ikke...
+          }
+        });
+
+      // console.log(login.data);
     } catch (error) {
     } finally {
     }
 
-    // const formSuccess = document.querySelector(".form-success");
     // form.reset();
   }
 
@@ -146,10 +190,13 @@ export default function HotelRequestForm({ hotel, API_URL }) {
             <label htmlFor="room" name="room">
               Desired room
             </label>
-            <select id="room" name="room" {...register("room")}>
+            <select
+              id="room"
+              name="room"
+              defaultValue={"0"}
+              {...register("room")}
+            >
               {rooms}
-              {/* <option value="membership">Membership request</option> */}
-              {/* <option value="trainer">Sign up as new trainer</option> */}
             </select>
           </div>
         </div>
@@ -233,5 +280,5 @@ export default function HotelRequestForm({ hotel, API_URL }) {
 
 HotelRequestForm.propTypes = {
   hotel: PropTypes.object,
-  API_URL: PropTypes.string,
+  API: PropTypes.object,
 };

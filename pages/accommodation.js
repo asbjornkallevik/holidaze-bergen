@@ -1,9 +1,5 @@
 // import { useState } from "react";
-import {
-  API_URL,
-  ACCOMMODATION_ENDPOINT,
-  MEDIA_ENDPOINT,
-} from "../constants/api";
+import { API } from "../constants/api";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Head from "../components/layout/Head";
@@ -45,8 +41,8 @@ export default function accommodations(props) {
 }
 
 export async function getStaticProps() {
-  const itemUrl = API_URL + ACCOMMODATION_ENDPOINT;
-  const mediaUrl = API_URL + MEDIA_ENDPOINT;
+  const itemUrl = API.API_URL + API.ACCOMMODATION_ENDPOINT;
+  const mediaUrl = API.API_URL + API.MEDIA_ENDPOINT;
   let data = [];
   let items = [];
 
