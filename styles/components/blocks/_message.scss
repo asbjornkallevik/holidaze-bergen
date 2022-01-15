@@ -1,0 +1,57 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 0 6px;
+  margin: 4px;
+  font-size: $font-step--1;
+  background-color: $color-primary-lighter;
+  border: 1px solid $color-primary;
+  border-radius: 2px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title {
+    color: $color-primary;
+  }
+  &__time {
+    font-size: $font-step--2;
+    color: darken($color-green, 45%);
+  }
+  &__body {
+    position: relative;
+    margin: 10px 0;
+    overflow: hidden;
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      th {
+        text-align: left;
+      }
+      td {
+        padding-right: 10px;
+        vertical-align: top;
+      }
+    }
+  }
+  &__expand {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  &__message {
+    max-height: 0;
+    margin: 20px 0;
+    overflow: hidden;
+    @include transitionModal($prop: max-height);
+
+    &--open {
+      max-height: 400px;
+    }
+  }
+  &__stay-dates {
+    color: $color-secondary;
+  }
+}

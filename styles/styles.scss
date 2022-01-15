@@ -28,9 +28,11 @@
 
 @import "./components/blocks/top-cover";
 @import "./components/blocks/card";
+@import "./components/blocks/message";
 @import "./components/blocks/image-carousel";
 
 // Pages
 @import "./pages/home";
 @import "./pages/accommodation";
 @import "./pages/single-page";
+@import "./pages/dashboard";

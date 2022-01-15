@@ -102,7 +102,7 @@ export default function HotelRequestForm({ hotel, API }) {
       : hotel.rooms[0].accommodation_rooms_name;
 
     const hotelRequest = {
-      title: `${hotel.title}: ${data.name} has sent a room request`,
+      title: hotel.title,
       content: data.content,
       status: "publish",
       acf: {
@@ -133,8 +133,6 @@ export default function HotelRequestForm({ hotel, API }) {
     } catch (error) {
     } finally {
     }
-
-    // form.reset();
   }
 
   return (
