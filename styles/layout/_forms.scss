@@ -64,22 +64,32 @@
     font-size: $font-step--2;
   }
 
-  &__success {
+  &__success,
+  &__error {
     margin-top: 40px;
     color: $color-black;
-    background-color: $color-green;
-    // display: inline-block;
-    // width: 320px;
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
     text-align: center;
     padding: 6px 0;
-    // border: 2px solid $color-green;
     border-radius: 4px;
-    // position: fixed;
-    bottom: 40px;
-    right: 20px;
     opacity: 0;
     @include transitionModal($prop: opacity);
+
+    &.show {
+      display: block;
+      opacity: 1;
+    }
   }
+  &__success {
+    background-color: $color-green;
+  }
+  &__error {
+    background-color: $color-secondary;
+  }
+
   /* @media (max-width: 999px) {
     width: 90%;
   } */

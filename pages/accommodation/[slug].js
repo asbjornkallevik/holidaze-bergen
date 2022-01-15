@@ -17,28 +17,7 @@ import Modal from "../../components/layout/Modal";
 export default function Slug(props) {
   const hotel = props.item;
 
-  useEffect(function () {
-    const sendRequestBtn = document.querySelector("#sendHotelRequest");
-    const modalCloseBtn = document.querySelector("#modalClose");
-    const modal = document.querySelector(".modal");
-
-    // Open and close modal
-    if (modal) {
-      sendRequestBtn.addEventListener("click", () => {
-        modal.classList.add("open");
-      });
-      modalCloseBtn.addEventListener("click", () => {
-        modal.classList.remove("open");
-      });
-      modal.addEventListener("click", (e) => {
-        if (e.target.classList.contains("modal")) {
-          modal.classList.remove("open");
-        }
-      });
-    }
-
-    // Add and remove class '.modal-open' when modal opens/closes
-  }, []);
+  useEffect(function () {}, []);
 
   return (
     <Layout page="single-page">
@@ -80,7 +59,10 @@ export default function Slug(props) {
         <div dangerouslySetInnerHTML={{ __html: hotel.content }}></div>
       </section>
       {/* Modal */}
-      <Modal title={`Send a request to ${hotel.title}`}>
+      <Modal
+        title={`Send a request to ${hotel.title}`}
+        triggerID="#sendHotelRequest"
+      >
         <HotelRequestForm hotel={hotel} API={props.API} />
       </Modal>
     </Layout>

@@ -28,6 +28,7 @@ export default function HotelRequestForm({ hotel, API }) {
   const requestUrl = API.API_URL + API.REQUESTS_ENDPOINT;
   const authUrl = API.API_BASE_URL + API.TOKEN_PATH;
 
+  const [requestSuccess, setRequestSuccess] = useState(0);
   const [auth, setAuth] = useContext(AuthContext);
   const http = useAxios();
 
@@ -49,24 +50,43 @@ export default function HotelRequestForm({ hotel, API }) {
   }
 
   // DOM manipulation
-  useEffect(function () {
-    const selectRooms = document.querySelector("#room");
+  useEffect(
+    function () {
+      const form = document.querySelector(".form");
+      const formSuccess = document.querySelector(".form__success");
+      const formError = document.querySelector(".form__error");
+      const selectRooms = document.querySelector("#room");
 
-    // Create hotel room options
-    selectRooms.innerHTML = "";
-    for (let i = 0; i < hotel.rooms.length; i++) {
-      const option = document.createElement("option");
+      // Populate hotel room options in form
+      selectRooms.innerHTML = "";
+      for (let i = 0; i < hotel.rooms.length; i++) {
+        const option = document.createElement("option");
 
-      option.setAttribute("value", i);
-      option.innerHTML = `${hotel.rooms[i].accommodation_rooms_name}, NOK ${hotel.rooms[i].accommodation_rooms_price},- per night`;
+        option.setAttribute("value", i);
+        option.innerHTML = `${hotel.rooms[i].accommodation_rooms_name}, NOK ${hotel.rooms[i].accommodation_rooms_price},- per night`;
 
-      selectRooms.appendChild(option);
-    }
+        selectRooms.appendChild(option);
+      }
 
-    function testMe() {
-      console.log("tested");
-    }
-  }, []);
+      // Display success text for message sent
+      console.dir(form);
+      if (requestSuccess === 1) {
+        formSuccess.classList.add("show");
+        formError.classList.remove("show");
+      } else if (requestSuccess === 2) {
+        formSuccess.classList.remove("show");
+        formError.classList.add("show");
+      } else {
+        formSuccess.classList.remove("show");
+        formError.classList.remove("show");
+      }
+
+      form.addEventListener("reset", () => {
+        setRequestSuccess(0);
+      });
+    },
+    [requestSuccess, hotel.rooms]
+  );
 
   const {
     register,
@@ -99,14 +119,13 @@ export default function HotelRequestForm({ hotel, API }) {
     };
 
     try {
-      const form = document.querySelector(".form");
-      const formSuccess = document.querySelector(".form-success");
       const response = await http
         .post(requestUrl, hotelRequest)
         .then((response) => {
           if (response.status === 201) {
-            // Show success confirmation text
-            // formSuccess.style.opacity = 1; funker ikke...
+            setRequestSuccess(1);
+          } else {
+            setRequestSuccess(2);
           }
         });
 
@@ -272,6 +291,10 @@ export default function HotelRequestForm({ hotel, API }) {
         <div className="form__success">
           Your request is now sent.
           <br /> {hotel.title} will get back to you within 24 hours.
+        </div>
+        <div className="form__error">
+          Something went wrong when sending the message.
+          <br /> Please try again later.
         </div>
       </form>
     </div>
