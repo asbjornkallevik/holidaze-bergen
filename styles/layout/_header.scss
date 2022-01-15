@@ -65,7 +65,26 @@
   &__menu {
     @include headerTransition($duration: 0.2s, $delay: 0s, $prop: opacity);
     opacity: 0;
+
+    .menu__item {
+      a {
+        @include transitionHover($prop: color);
+      }
+
+      &:hover {
+        a {
+          color: $color-highlight;
+        }
+      }
+
+      &.active {
+        a {
+          color: $color-orange;
+        }
+      }
+    }
   }
+
   &__logo-wrapper {
     height: $headerHeight;
     // width: 80%;
