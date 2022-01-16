@@ -8,11 +8,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
+  const heroVideo = require("../public/videos/bergen_v2.mp4");
   return (
     <Layout page="home">
       <Head />
       <Heading text="Holidaze" size={1} />
-      <TopCover img={heroImg.src} size="large"></TopCover>
+      <TopCover video={heroVideo} img={heroImg.src} size="large"></TopCover>
 
       <Heading text="Heading 2" size={2} />
       <p>

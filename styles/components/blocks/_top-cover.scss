@@ -2,7 +2,7 @@
   @extend .alignfull;
   position: relative;
   width: 100%;
-
+  overflow: hidden;
   background-color: $color-highlight-lighter;
 
   &--large {
@@ -28,5 +28,20 @@
     left: 0;
     right: 0;
     z-index: 1;
+
+    &.video-overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  video {
+    position: absolute;
+    width: 100vw;
+    height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
+    min-height: 100vh;
+    min-width: 177.77vh; /* Given a 16:9 aspect ratio, 16/9*100 = 177.77 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

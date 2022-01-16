@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-function TopCover({ children, img, size }) {
+function TopCover({ children, img, size, video }) {
+  const overlayClass = video ? "video-overlay" : "";
   return (
     <div className={`top-cover top-cover--${size} alignfull`}>
       <Image
@@ -11,7 +12,12 @@ function TopCover({ children, img, size }) {
         quality="50"
         alt="Bergen"
       />
-      <div className="top-cover__inner-container">{children}</div>
+      {/* Display hero video if provided */}
+      {video ? <video autoPlay={true} muted loop src={video} /> : ""}
+
+      <div className={`top-cover__inner-container ${overlayClass}`}>
+        {children}
+      </div>
     </div>
   );
 }
@@ -21,6 +27,7 @@ TopCover.propTypes = {
   children: PropTypes.node,
   size: PropTypes.string,
   img: PropTypes.string,
+  video: PropTypes.string,
 };
 
 export default TopCover;
