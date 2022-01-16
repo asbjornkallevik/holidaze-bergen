@@ -37,10 +37,6 @@ export default function HolidazeSlogan() {
               </SwiperSlide>
             );
           })}
-
-          {/* <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide> */}
         </Swiper>
       </div>
       <div className="slogan__tagline">
