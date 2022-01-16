@@ -27,8 +27,8 @@ export default function HolidazeSlogan() {
           speed={800}
           spaceBetween={50}
           slidesPerView={1}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
+          // onSlideChange={() => }
+          // onSwiper={(swiper) => }
         >
           {adjectives.map((word) => {
             return (

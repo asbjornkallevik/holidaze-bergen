@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { API } from "../constants/api";
 import axios from "axios";
 import Layout from "../components/layout/Layout";

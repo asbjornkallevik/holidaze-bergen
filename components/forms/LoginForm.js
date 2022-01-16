@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -14,6 +14,7 @@ const schema = yup.object().shape({
 });
 
 export default function LoginForm(props) {
+  useEffect(() => {}, []);
   const authUrl = props.API.API_BASE_URL + props.API.TOKEN_PATH;
   const [submitting, setSubmitting] = useState(false);
   const [loginError, setLoginError] = useState(null);
@@ -39,6 +40,7 @@ export default function LoginForm(props) {
       const response = await axios.post(authUrl, data);
       console.log(response.data);
       setAuth(response.data);
+
       router.push("/admin/dashboard");
     } catch (error) {
       console.log("Error: ", error);

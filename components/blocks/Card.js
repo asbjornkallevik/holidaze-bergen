@@ -8,7 +8,7 @@ import dummyImg from "../..//public/images/dummy-img.jpg";
 
 function Card(props) {
   const cardClass = props.layoutWide ? "card card--wide" : "card";
-
+  console.log(props);
   return (
     <div className={cardClass}>
       <div className="card__background">

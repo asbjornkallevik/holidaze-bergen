@@ -69,6 +69,8 @@
     .menu__item {
       a {
         @include transitionHover($prop: color);
+        color: $color-white;
+        text-decoration: none;
       }
 
       &:hover {
@@ -82,6 +84,18 @@
           color: $color-orange;
         }
       }
+    }
+  }
+  &__login-btn,
+  &__logout-btn {
+    margin-top: 80px;
+  }
+
+  #loginBtn,
+  #logoutBtn {
+    display: none;
+    &.show {
+      display: flex;
     }
   }
 
@@ -137,9 +151,5 @@
       @include headerTransition($duration: 0.8s, $delay: 0.4s, $prop: opacity);
       opacity: 1;
     }
-  }
-  a {
-    color: $color-white;
-    text-decoration: none;
   }
 }
