@@ -1,0 +1,49 @@
+.slogan {
+  display: flex;
+  column-gap: 40px;
+  width: 90%;
+  margin: 0 auto;
+
+  height: 400px;
+
+  &__adjectives {
+    width: 50%;
+    // border: 1px dashed red;
+    .swiper {
+      height: 100%;
+      .swiper-wrapper {
+        // justify-items: center;
+      }
+      .swiper-slide {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      //   width: 200px;
+    }
+    p {
+      &.orange {
+        color: $color-orange;
+      }
+      &.yellow {
+        color: $color-highlight;
+      }
+      &.green {
+        color: $color-green;
+      }
+      &.purple {
+        color: lighten($color-primary, 30%);
+      }
+    }
+  }
+  &__tagline {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    // border: 1px dashed red;
+    p {
+      color: $color-primary-lighter;
+      margin: 0;
+    }
+  }
+}

@@ -2,6 +2,8 @@
 @import "swiper/scss";
 @import "swiper/scss/navigation";
 @import "swiper/scss/pagination";
+@import "swiper/scss/autoplay";
+@import "swiper/scss/effect-coverflow";
 
 // Abstracts
 @import "./abstracts/variables";
@@ -22,6 +24,8 @@
 // Components
 @import "./components/blocks/buttons";
 @import "./components/navigation";
+
+@import "./components/home/slogan";
 
 @import "./components/accommodation/room";
 @import "./components/accommodation/facility";

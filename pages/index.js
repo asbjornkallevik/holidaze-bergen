@@ -4,6 +4,7 @@ import Heading from "../components/typography/Heading";
 
 import heroImg from "../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../components/blocks/TopCover";
+import HolidazeSlogan from "../components/home/HolidazeSlogan";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,7 +14,9 @@ export default function Home() {
     <Layout page="home">
       <Head />
       <Heading text="Holidaze" size={1} />
-      <TopCover video={heroVideo} img={heroImg.src} size="large"></TopCover>
+      <TopCover video={heroVideo} img={heroImg.src} size="large">
+        <HolidazeSlogan />
+      </TopCover>
 
       <Heading text="Heading 2" size={2} />
       <p>

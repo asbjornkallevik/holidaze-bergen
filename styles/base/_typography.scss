@@ -50,6 +50,26 @@ h6 {
   font-size: $font-step--2;
   margin: 10px 0 4px;
 }
+.slogan {
+  &__adjectives {
+    p {
+      @include font-bold();
+      text-transform: lowercase;
+      font-size: $font-step-6;
+    }
+  }
+  &__tagline {
+    p {
+      @extend %heading;
+      @include font-bold();
+      line-height: 1.2;
+      font-size: $font-step-6;
+    }
+    span {
+      display: block;
+    }
+  }
+}
 a {
   color: $color-orange;
   // text-decoration: none;

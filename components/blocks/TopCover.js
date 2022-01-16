@@ -4,7 +4,7 @@ import Image from "next/image";
 function TopCover({ children, img, size, video }) {
   const overlayClass = video ? "video-overlay" : "";
   return (
-    <div className={`top-cover top-cover--${size} alignfull`}>
+    <div className={`top-cover top-cover--${size} alignfull`} role="banner">
       <Image
         src={img}
         layout="fill"
