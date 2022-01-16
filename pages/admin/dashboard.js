@@ -1,4 +1,6 @@
 import { API } from "../../constants/api";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 
 import Layout from "../../components/layout/Layout";
@@ -10,9 +12,11 @@ import TopCover from "../../components/blocks/TopCover";
 import Message from "../../components/admin/Message";
 
 export default function dashboard(props) {
+  const [auth, setAuth] = useContext(AuthContext);
+
   const requests = props.requests;
 
-  console.log(requests);
+  console.log("Dashboard: ", auth);
   return (
     <Layout page="dashboard">
       <Head />

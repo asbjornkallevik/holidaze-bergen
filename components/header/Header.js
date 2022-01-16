@@ -34,10 +34,10 @@ export default function Header() {
         router.pathname == "/contact" ? "menu__item active" : "menu__item",
     },
     {
-      slug: "login",
+      slug: "admin/login",
       pageName: "Log in",
       itemClass:
-        router.pathname == "/login" ? "menu__item active" : "menu__item",
+        router.pathname == "/admin/login" ? "menu__item active" : "menu__item",
     },
   ];
 
