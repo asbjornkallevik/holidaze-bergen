@@ -9,4 +9,9 @@
       justify-content: flex-start;
     }
   }
+  &__cta-button {
+    position: absolute;
+    bottom: 80px;
+    right: 40px;
+  }
 }

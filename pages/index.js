@@ -5,6 +5,7 @@ import Heading from "../components/typography/Heading";
 import heroImg from "../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../components/blocks/TopCover";
 import HolidazeSlogan from "../components/home/HolidazeSlogan";
+import ButtonLink from "../components/blocks/ButtonLink";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -16,6 +17,14 @@ export default function Home() {
       <Heading text="Holidaze" size={1} />
       <TopCover video={heroVideo} img={heroImg.src} size="large">
         <HolidazeSlogan />
+        <div className="home__cta-button">
+          <ButtonLink
+            text="Find a hotel now"
+            style="highlight"
+            link="/accommodation"
+            short
+          />
+        </div>
       </TopCover>
 
       <Heading text="Heading 2" size={2} />
