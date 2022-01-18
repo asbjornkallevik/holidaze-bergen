@@ -1,7 +1,15 @@
 .hotel-loop {
   //   border: 1px dashed salmon;
   //   height: 400px;
+  position: relative;
   .swiper-slide {
     max-width: 480px;
+  }
+
+  // Navigation buttons
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 50%;
+    height: 10%;
   }
 }

@@ -13,8 +13,6 @@ export default function ImageCarousel({ images }) {
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
     >
       {images.map((image) => {
         return (

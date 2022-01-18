@@ -8,7 +8,7 @@ import dummyImg from "../..//public/images/dummy-img.jpg";
 
 function Card(props) {
   const cardClass = props.layoutWide ? "card card--wide" : "card";
-  console.log(props);
+
   return (
     <div className={cardClass}>
       <div className="card__background">
@@ -32,7 +32,7 @@ function Card(props) {
           dangerouslySetInnerHTML={{ __html: props.excerpt }}
         ></div>
         <div className="card__facilities">
-          <Facilities items={props.facilities} />
+          {props.facilities ? <Facilities items={props.facilities} /> : ""}
         </div>
       </div>
       <div className="card__footer">

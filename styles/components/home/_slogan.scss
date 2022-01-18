@@ -18,6 +18,10 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        p {
+          // cursor: ns-resize;
+          cursor: grab;
+        }
       }
       //   width: 200px;
     }

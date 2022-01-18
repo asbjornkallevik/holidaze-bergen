@@ -15,7 +15,11 @@ export default function HolidazeSlogan() {
           className="slogan__swiper"
           modules={[Autoplay, EffectCoverflow]}
           effect="coverflow"
-          autoplay={{ delay: 2000, reverseDirection: true }}
+          autoplay={{
+            delay: 2000,
+            reverseDirection: true,
+            disableOnInteraction: false,
+          }}
           coverflowEffect={{
             depth: 100,
             rotate: -150,

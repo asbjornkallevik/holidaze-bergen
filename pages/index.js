@@ -30,7 +30,7 @@ export default function Home(props) {
         </div>
       </TopCover>
       <Heading text="Popular hotels" />
-      <section className="home__hotel-loop alignfull">
+      <section className="home__hotel-loop ">
         <HotelLoop hotels={props.items} />
       </section>
 

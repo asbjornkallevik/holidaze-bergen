@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow } from "swiper";
+import { EffectCoverflow, Navigation } from "swiper";
 import Card from "./Card";
 
 import heroImg from "../../public/images/dummy-img.jpg";
@@ -10,7 +10,8 @@ export default function HotelLoop(props) {
   return (
     <Swiper
       className="hotel-loop"
-      modules={[EffectCoverflow]}
+      modules={[EffectCoverflow, Navigation]}
+      navigation
       spaceBetween={80}
       slidesPerView={3}
       centeredSlides={true}

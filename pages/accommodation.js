@@ -8,9 +8,9 @@ import Heading from "../components/typography/Heading";
 import heroImg from "../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../components/blocks/TopCover";
 import Card from "../components/blocks/Card";
+import HotelSearch from "../components/forms/HotelSearch";
 
 export default function accommodations(props) {
-  console.log(props);
   const pageSlug = "accommodation";
   return (
     <Layout page={pageSlug}>
@@ -19,6 +19,11 @@ export default function accommodations(props) {
         <Heading text="Accommodation" size={1} />
       </TopCover>
 
+      {/* Hotel search */}
+      <section className="accommodation__search">
+        <HotelSearch allHotels={props.items} />
+      </section>
+      {/* Hotels list */}
       <section className="accommodation__list">
         {props.items.map((item) => {
           return (
