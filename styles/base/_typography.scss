@@ -81,4 +81,8 @@ a {
 .menu__item {
   @include font-thin();
   font-size: $font-step-3;
+
+  &.admin {
+    font-size: $font-step-1;
+  }
 }

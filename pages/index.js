@@ -8,6 +8,7 @@ import heroImg from "../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../components/blocks/TopCover";
 import HolidazeSlogan from "../components/home/HolidazeSlogan";
 import HotelLoop from "../components/blocks/HotelLoop";
+import HotelSearch from "../components/forms/HotelSearch";
 import ButtonLink from "../components/blocks/ButtonLink";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,6 +30,8 @@ export default function Home(props) {
           />
         </div>
       </TopCover>
+      {/* <Heading text="Search for a hotel" /> */}
+      <HotelSearch allHotels={props.items} />
       <Heading text="Popular hotels" />
       <section className="home__hotel-loop ">
         <HotelLoop hotels={props.items} />

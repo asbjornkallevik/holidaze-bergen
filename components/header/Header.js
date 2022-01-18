@@ -10,15 +10,17 @@ export default function Header() {
   const router = useRouter();
   const [auth, setAuth] = useContext(AuthContext);
 
-  const menuItems = [
+  let menuItems = [
     {
       slug: "",
       pageName: "Home",
+      public: true,
       itemClass: router.pathname == "/" ? "menu__item active" : "menu__item",
     },
     {
       slug: "accommodation",
       pageName: "Accommodation",
+      public: true,
       itemClass:
         router.pathname == "/accommodation"
           ? "menu__item active"
@@ -27,22 +29,35 @@ export default function Header() {
     {
       slug: "about-us",
       pageName: "About us",
+      public: true,
       itemClass:
         router.pathname == "/about-us" ? "menu__item active" : "menu__item",
     },
     {
       slug: "contact",
       pageName: "Contact",
+      public: true,
       itemClass:
         router.pathname == "/contact" ? "menu__item active" : "menu__item",
     },
-    /* {
-      slug: "admin/login",
-      pageName: "Log in",
+    {
+      slug: "admin/dashboard",
+      pageName: "My dashboard",
+      public: false,
       itemClass:
-        router.pathname == "/admin/login" ? "menu__item active" : "menu__item",
-    }, */
+        router.pathname == "/admin/dashboard"
+          ? "menu__item admin active"
+          : "menu__item admin",
+    },
   ];
+
+  // Show dashboard in menu only if logged in
+  if (!auth) {
+    menuItems = menuItems.filter((items) => items.public === true);
+  } else {
+    menuItems = menuItems;
+  }
+
   useEffect(() => {
     const loginBtn = document.querySelector("#loginBtn");
     const logoutBtn = document.querySelector("#logoutBtn");
@@ -80,7 +95,6 @@ export default function Header() {
   return (
     <header className="page-header">
       <HamburgerMenu />
-
       <div className="page-header__wrapper">
         <div className="page-header__logo-wrapper">
           <Logo customClass="page-header__logo" includeTag={true} />

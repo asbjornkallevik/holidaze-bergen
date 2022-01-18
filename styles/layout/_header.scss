@@ -79,13 +79,23 @@
         }
       }
 
-      &.active {
+      &.active,
+      &.admin.active {
         a {
           color: $color-orange;
         }
       }
+
+      &.admin {
+        margin-top: 40px;
+
+        a {
+          color: $color-green;
+        }
+      }
     }
   }
+
   &__login-btn,
   &__logout-btn {
     margin-top: 80px;

@@ -19,6 +19,16 @@
 @mixin transitionModal($prop: all) {
   transition: 0.4s $prop ease-in-out;
 }
+@mixin boxHeightTransition($prop) {
+  transition: 0.6s $prop ease-out;
+}
+// Box shadow
+@mixin shadow() {
+  box-shadow: -1px 7px 18px -7px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px 7px 18px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 7px 18px -7px rgba(0, 0, 0, 0.75);
+  transition: box-shadow 0.3s ease-in-out;
+}
 
 // Button height settings
 @mixin buttonHeight($height: 42px) {
