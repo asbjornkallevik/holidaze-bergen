@@ -2,6 +2,7 @@
   // border: 1px dashed salmon;
   display: flex;
   flex-direction: column;
+  width: 480px;
   max-width: 480px;
   min-height: auto;
   position: relative;
@@ -15,6 +16,7 @@
 
   &--wide {
     flex-direction: row;
+    width: auto;
     max-width: 100%;
     min-height: 280px;
 

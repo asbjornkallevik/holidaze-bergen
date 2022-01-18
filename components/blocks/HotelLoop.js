@@ -12,8 +12,9 @@ export default function HotelLoop(props) {
       className="hotel-loop"
       modules={[EffectCoverflow, Navigation]}
       navigation
-      spaceBetween={80}
-      slidesPerView={3}
+      spaceBetween={400}
+      speed={800}
+      slidesPerView={2}
       centeredSlides={true}
       effect="coverflow"
       coverflowEffect={{
