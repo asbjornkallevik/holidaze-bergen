@@ -15,6 +15,7 @@ import Heading from "../../components/typography/Heading";
 import heroImg from "../../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../../components/blocks/TopCover";
 import Message from "../../components/admin/Message";
+import ButtonLink from "../../components/blocks/ButtonLink";
 import LoginForm from "../../components/forms/LoginForm";
 
 export default function dashboard(props) {
@@ -31,7 +32,20 @@ export default function dashboard(props) {
       </TopCover>
       {auth ? (
         <section className="dashboard__wrapper">
-          <Heading text="Messages" size={2} />
+          <section className="dashboard__menu">
+            <div className="dashboard__edit">
+              <ButtonLink text="Edit a hotel" style="primary" link="/add-new" />
+            </div>
+            <div className="dashboard__add">
+              <ButtonLink
+                text="Add new hotel"
+                style="success"
+                link="/add-new"
+                left
+              />
+            </div>
+          </section>
+          {/* <Heading text="Messages" size={2} /> */}
           <div className="dashboard__messages">
             <section className="dashboard__admin-messages">
               <Heading text="Contact messages" size={3} />

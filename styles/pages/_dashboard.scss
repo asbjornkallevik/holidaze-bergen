@@ -1,11 +1,20 @@
 .dashboard {
+  &__wrapper {
+    // margin-top: 20px;
+  }
+  &__menu {
+    display: flex;
+    justify-content: center;
+    column-gap: $columnGap;
+    padding: 40px;
+    background-color: $color-highlight-lighter;
+  }
   &__messages {
     display: flex;
     justify-content: space-between;
-    column-gap: 20px;
+    column-gap: $columnGap;
   }
   &__admin-messages {
-    border: 1px dashed salmon;
     width: 100%;
     .message {
       background-color: $color-highlight-lighter;
@@ -16,7 +25,6 @@
     }
   }
   &__hotel-requests {
-    border: 1px dashed salmon;
     width: 100%;
   }
 }

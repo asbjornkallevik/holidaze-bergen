@@ -10,9 +10,10 @@ Button styles:
 -grey 
 --- */
 
-function ButtonLink({ text, style, link, id, short, customClass }) {
+function ButtonLink({ text, style, link, id, short, customClass, left }) {
   let btnClass = style ? `btn btn--${style}` : "btn";
   btnClass += short ? " btn--short" : "";
+  btnClass += left ? " btn--left" : "";
   btnClass += customClass ? " " + customClass : "";
 
   return (
@@ -30,6 +31,7 @@ ButtonLink.propTypes = {
   link: PropTypes.string,
   id: PropTypes.string,
   short: PropTypes.bool,
+  left: PropTypes.bool,
   customClass: PropTypes.string,
 };
 

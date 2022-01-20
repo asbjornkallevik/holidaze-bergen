@@ -43,3 +43,13 @@
   border-right-width: $height;
   right: calc($height * -1);
 }
+
+@mixin buttonHeightAfterLeft($height: 42px) {
+  border-bottom-style: solid;
+  border-bottom-color: inherit;
+  border-left-style: solid;
+  border-left-color: transparent;
+  border-bottom-width: $height;
+  border-left-width: $height;
+  left: calc($height * -1);
+}
