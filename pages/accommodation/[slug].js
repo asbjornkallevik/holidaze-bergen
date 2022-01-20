@@ -1,7 +1,11 @@
+import dynamic from "next/dynamic";
+
 import { useEffect } from "react";
 import { API } from "../../constants/api";
 import axios from "axios";
-import Layout from "../../components/layout/Layout";
+const Layout = dynamic(() => import("../../components/layout/Layout"), {
+  ssr: false,
+});
 import Head from "../../components/layout/Head";
 
 import TopCover from "../../components/blocks/TopCover";

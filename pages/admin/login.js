@@ -1,6 +1,9 @@
+import dynamic from "next/dynamic";
 import { API } from "../../constants/api";
 
-import Layout from "../../components/layout/Layout";
+const Layout = dynamic(() => import("../../components/layout/Layout"), {
+  ssr: false,
+});
 import Head from "../../components/layout/Head";
 import Heading from "../../components/typography/Heading";
 

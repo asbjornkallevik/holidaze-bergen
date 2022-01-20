@@ -19,7 +19,6 @@ import LoginForm from "../../components/forms/LoginForm";
 
 export default function dashboard(props) {
   const [auth, setAuth] = useContext(AuthContext);
-
   const requests = props.requests;
 
   console.log("Dashboard: ", auth);
@@ -36,7 +35,11 @@ export default function dashboard(props) {
           <div className="dashboard__messages">
             <section className="dashboard__admin-messages">
               <Heading text="Contact messages" size={3} />
-              <Message created="000000" content={{ title: "test", id: 0 }}>
+              <Message
+                created="000000"
+                content={{ title: "test", id: 0 }}
+                auth={auth}
+              >
                 <div className="message__excerpt">
                   This section is under construction
                 </div>
@@ -46,7 +49,7 @@ export default function dashboard(props) {
               <Heading text="Hotel requests" size={3} />
               {requests.map((request) => {
                 return (
-                  <Message key={request.id} content={request}>
+                  <Message key={request.id} content={request} auth={auth}>
                     <table>
                       <tbody>
                         <tr>

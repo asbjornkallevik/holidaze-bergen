@@ -10,6 +10,7 @@ export default function Modal(props) {
     const form = modal.querySelector(".form");
     const modalTrigger = document.querySelector(props.triggerID);
     const modalCloseBtn = document.querySelector("#modalClose");
+    const alternativeCloseBtn = document.querySelector(".alternativeCloseBtn");
 
     // Open modal
     modalTrigger.addEventListener("click", () => {
@@ -22,6 +23,11 @@ export default function Modal(props) {
         form.reset();
       }
     });
+    if (alternativeCloseBtn) {
+      alternativeCloseBtn.addEventListener("click", () => {
+        modal.classList.remove("open");
+      });
+    }
     modal.addEventListener("click", (e) => {
       if (e.target.classList.contains("modal")) {
         modal.classList.remove("open");

@@ -1,8 +1,13 @@
+import dynamic from "next/dynamic";
+
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import Logo from "./Logo";
 import HamburgerMenu from "./HamburgerMenu";
+/* const Link = dynamic(() => import("next/link"), {
+  ssr: false,
+}); */
 import Link from "next/link";
 import Button from "../blocks/Button";
 
@@ -50,7 +55,7 @@ export default function Header() {
           : "menu__item admin",
     },
   ];
-
+  console.log(auth);
   // Show dashboard in menu only if logged in
   if (!auth) {
     menuItems = menuItems.filter((items) => items.public === true);
@@ -64,32 +69,32 @@ export default function Header() {
 
     // Display log in / log out button
     if (auth) {
-      if (!logoutBtn.classList.contains("show")) {
+      if (logoutBtn && !logoutBtn.classList.contains("show")) {
         logoutBtn.classList.add("show");
+        // Log out
+        logoutBtn.addEventListener("click", () => {
+          setAuth(null);
+          setTimeout(() => {
+            loginBtn.classList.add("show");
+            logoutBtn.classList.remove("show");
+          }, 1000);
+        });
       }
-      if (loginBtn.classList.contains("show")) {
+      if (loginBtn && loginBtn.classList.contains("show")) {
         loginBtn.classList.remove("show");
       }
     } else {
-      if (!loginBtn.classList.contains("show")) {
+      if (loginBtn && !loginBtn.classList.contains("show")) {
         loginBtn.classList.add("show");
+        // Go to login
+        loginBtn.addEventListener("click", (e) => {
+          router.push("/admin/login");
+        });
       }
-      if (logoutBtn.classList.contains("show")) {
+      if (logoutBtn && logoutBtn.classList.contains("show")) {
         logoutBtn.classList.remove("show");
       }
     }
-    // Go to login
-    loginBtn.addEventListener("click", (e) => {
-      router.push("/admin/login");
-    });
-    // Log out
-    logoutBtn.addEventListener("click", () => {
-      setAuth(null);
-      setTimeout(() => {
-        loginBtn.classList.add("show");
-        logoutBtn.classList.remove("show");
-      }, 1000);
-    });
   }, [auth, router, setAuth]);
   // setAuth(null);
   return (

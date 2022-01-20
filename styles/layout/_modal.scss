@@ -1,7 +1,11 @@
 .modal {
   position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   z-index: 100;
   background-color: rgba($color-black, 0.95);
@@ -26,6 +30,10 @@
     position: relative;
     background-color: $color-primary-lighter;
     padding: 40px 10px 10px;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
   }
   &__close#modalClose {
     position: absolute;

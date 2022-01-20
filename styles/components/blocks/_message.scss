@@ -12,10 +12,47 @@
     display: flex;
     justify-content: space-between;
   }
+  &__delete {
+    padding-top: 10px;
+
+    .wrapper {
+      display: flex;
+      align-items: center;
+      column-gap: 4px;
+      color: darken($color-orange, 16%);
+      cursor: pointer;
+      path {
+        fill: darken($color-orange, 16%);
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+      .text {
+      }
+      .icon {
+        // width: 14px;
+        height: 18px;
+        svg {
+          height: 90%;
+        }
+      }
+    }
+  }
+  &__delete-warning {
+    font-size: $font-step-1;
+    text-align: center;
+  }
+  &__delete-buttons {
+    display: flex;
+    justify-content: center;
+    column-gap: 40px;
+    margin-bottom: 20px;
+  }
   &__title {
     color: $color-primary;
   }
   &__time {
+    margin-bottom: 6px;
     font-size: $font-step--2;
     color: darken($color-green, 45%);
   }
@@ -53,5 +90,8 @@
   }
   &__stay-dates {
     color: $color-secondary;
+  }
+  .modal {
+    align-items: center;
   }
 }
