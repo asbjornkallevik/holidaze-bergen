@@ -1,21 +1,35 @@
 import PropTypes from "prop-types";
 import { utilities } from "../../scripts/utilities.js";
 import { useEffect, useState } from "react";
+import AuthContext from "../../context/AuthContext";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
+
 import Button from "../blocks/Button.js";
 import Link from "next/link";
 
 import Modal from "../layout/Modal.js";
 import Heading from "../typography/Heading";
 
-async function handleDelete(message) {
-  console.log("Deleting message ", message);
-  location.reload();
-  {
-    /* DELETE QUERY HERE */
-  }
-}
 export default function Message(props) {
+  const requestUrl = props.API.API_URL + props.API.REQUESTS_ENDPOINT;
+  const http = useAxios();
+
   const [messageOpen, setMessageOpen] = useState(false);
+
+  async function handleDelete(messageID) {
+    console.log("Deleting message ", messageID);
+    console.log(requestUrl + messageID);
+    const message = requestUrl + messageID;
+
+    try {
+      const response = await http.delete(message);
+      console.log(response);
+    } catch (error) {
+    } finally {
+      location.reload();
+    }
+  }
 
   useEffect(function () {
     const buttonID = `expandMessage${props.content.id}`;
@@ -46,7 +60,9 @@ export default function Message(props) {
       let messageID = e.currentTarget.dataset.id;
       modal.classList.add("open");
       finalDelete.addEventListener("click", () => {
-        handleDelete(messageID);
+        handleDelete(messageID).then(() => {
+          modal.classList.remove("open");
+        });
       });
     });
 
@@ -163,4 +179,5 @@ Message.propTypes = {
   content: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   auth: PropTypes.object.isRequired,
+  API: PropTypes.object.isRequired,
 };

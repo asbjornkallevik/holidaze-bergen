@@ -69,7 +69,7 @@ export default function HotelRequestForm({ hotel, API }) {
       }
 
       // Display success text for message sent
-      console.dir(form);
+
       if (requestSuccess === 1) {
         formSuccess.classList.add("show");
         formError.classList.remove("show");

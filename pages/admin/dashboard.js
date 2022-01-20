@@ -39,6 +39,7 @@ export default function dashboard(props) {
                 created="000000"
                 content={{ title: "test", id: 0 }}
                 auth={auth}
+                API={props.API}
               >
                 <div className="message__excerpt">
                   This section is under construction
@@ -49,7 +50,12 @@ export default function dashboard(props) {
               <Heading text="Hotel requests" size={3} />
               {requests.map((request) => {
                 return (
-                  <Message key={request.id} content={request} auth={auth}>
+                  <Message
+                    key={request.id}
+                    content={request}
+                    auth={auth}
+                    API={props.API}
+                  >
                     <table>
                       <tbody>
                         <tr>
