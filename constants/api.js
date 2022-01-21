@@ -13,6 +13,7 @@ export const API = {
   ACCOMMODATION_ENDPOINT: "accommodation/",
   REQUESTS_ENDPOINT: "hotel-request/",
   MEDIA_ENDPOINT: "media/",
+  CATEGORIES_ENDPOINT: "categories/",
   TOKEN_PATH: "jwt-auth/v1/token",
   GUEST_USER: {
     username: "appexdev",

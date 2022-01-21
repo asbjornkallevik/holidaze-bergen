@@ -25,7 +25,7 @@ export default function dashboard(props) {
   console.log("Dashboard: ", auth);
   return (
     <Layout page="dashboard">
-      <Head />
+      <Head title="Dashboard" />
 
       <TopCover img={heroImg.src} size="small">
         <Heading text="Dashboard" size={1} />
@@ -40,7 +40,7 @@ export default function dashboard(props) {
               <ButtonLink
                 text="Add new hotel"
                 style="success"
-                link="/add-new"
+                link="/admin/add-new"
                 left
               />
             </div>

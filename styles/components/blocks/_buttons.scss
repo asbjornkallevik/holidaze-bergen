@@ -20,6 +20,7 @@ button {
     background-color: darken($color-white, 15%);
     border-top-color: darken($color-white, 15%);
     border-bottom-color: darken($color-white, 15%);
+    @include shadow();
   }
 
   &::after {

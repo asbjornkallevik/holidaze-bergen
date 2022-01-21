@@ -30,6 +30,7 @@
   .form__group {
     position: relative;
     align-items: center;
+    flex-wrap: nowrap;
   }
   &__results {
     @include shadow();
