@@ -1,8 +1,11 @@
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 import Logo from "../header/Logo";
 import Link from "next/link";
 import Heading from "../typography/Heading";
 
 export default function Footer() {
+  const [auth, setAuth] = useContext(AuthContext);
   return (
     <footer className="page-footer">
       <div className="page-footer__logo-wrapper">
@@ -37,26 +40,30 @@ export default function Footer() {
           </nav>
         </div>
       </div>
-      <div className="page-footer__admin-menu">
-        <div className="page-footer__nav-wrapper">
-          <nav>
-            <Heading text="Admin menu" size={3} />
-            <ul className="page-footer__menu menu">
-              {/* Display menu items */}
+      {auth ? (
+        <div className="page-footer__admin-menu">
+          <div className="page-footer__nav-wrapper">
+            <nav>
+              <Heading text="Admin menu" size={3} />
+              <ul className="page-footer__menu menu">
+                {/* Display menu items */}
 
-              <li className="menu__item">
-                <Link href="/admin/dashboard">Dashboard</Link>
-              </li>
-              <li className="menu__item">
-                <Link href="/add-new">Add new hotel</Link>
-              </li>
-              <li className="menu__item">
-                <Link href="/edit-hotel">Edit hotel</Link>
-              </li>
-            </ul>
-          </nav>
+                <li className="menu__item">
+                  <Link href="/admin/dashboard">Dashboard</Link>
+                </li>
+                <li className="menu__item">
+                  <Link href="/add-new">Add new hotel</Link>
+                </li>
+                <li className="menu__item">
+                  <Link href="/edit-hotel">Edit hotel</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </footer>
   );
 }
