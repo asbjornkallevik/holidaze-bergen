@@ -21,28 +21,32 @@ import AddNewHotel from "../../components/forms/AddNewHotel";
 import EditSelectBox from "../../components/forms/EditSelectBox";
 
 export default function editHotel(props) {
+  const [auth, setAuth] = useContext(AuthContext);
   return (
     <Layout page="edit-hotel">
       <Head title="Edit hotel" />
       <TopCover img={heroImg.src} size="small">
         <Heading text="Edit hotel" size={1} />
       </TopCover>
-
-      <section className="add-new__wrapper">
-        <EditSelectBox hotels={props.hotels}>
-          <div id="hotelToEdit" data-id={0}></div>
-          <div>
-            <p className="edit-hotel__load-error error-message"></p>
-          </div>
-          <AddNewHotel
-            API={props.API}
-            media={props.mediaLibrary}
-            categories={props.categories}
-            hotels={props.hotels}
-            editMode={true}
-          />
-        </EditSelectBox>
-      </section>
+      {auth ? (
+        <section className="add-new__wrapper">
+          <EditSelectBox hotels={props.hotels}>
+            <div id="hotelToEdit" data-id={0}></div>
+            <div>
+              <p className="edit-hotel__load-error error-message"></p>
+            </div>
+            <AddNewHotel
+              API={props.API}
+              media={props.mediaLibrary}
+              categories={props.categories}
+              hotels={props.hotels}
+              editMode={true}
+            />
+          </EditSelectBox>
+        </section>
+      ) : (
+        <p>You are not authorized to do this</p>
+      )}
     </Layout>
   );
 }

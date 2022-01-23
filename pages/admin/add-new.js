@@ -14,26 +14,28 @@ import Heading from "../../components/typography/Heading";
 
 import heroImg from "../../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../../components/blocks/TopCover";
-import Message from "../../components/admin/Message";
-import ButtonLink from "../../components/blocks/ButtonLink";
-import LoginForm from "../../components/forms/LoginForm";
+
 import AddNewHotel from "../../components/forms/AddNewHotel";
 
 export default function addNew(props) {
+  const [auth, setAuth] = useContext(AuthContext);
   return (
     <Layout page="add-new">
       <Head title="Add new" />
       <TopCover img={heroImg.src} size="small">
         <Heading text="Add new hotel" size={1} />
       </TopCover>
-
-      <section className="add-new__wrapper">
-        <AddNewHotel
-          API={props.API}
-          media={props.mediaLibrary}
-          categories={props.categories}
-        />
-      </section>
+      {auth ? (
+        <section className="add-new__wrapper">
+          <AddNewHotel
+            API={props.API}
+            media={props.mediaLibrary}
+            categories={props.categories}
+          />
+        </section>
+      ) : (
+        <p>You are not authorized to do this</p>
+      )}
     </Layout>
   );
 }
