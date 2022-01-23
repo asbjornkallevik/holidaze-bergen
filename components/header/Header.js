@@ -5,10 +5,10 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import Logo from "./Logo";
 import HamburgerMenu from "./HamburgerMenu";
-/* const Link = dynamic(() => import("next/link"), {
+const Link = dynamic(() => import("next/link"), {
   ssr: false,
-}); */
-import Link from "next/link";
+});
+// import Link from "next/link";
 import Button from "../blocks/Button";
 
 export default function Header() {

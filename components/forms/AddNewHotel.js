@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+import { utilities } from "../../scripts/utilities";
 import { useEffect, useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
@@ -13,37 +13,61 @@ import Heading from "../typography/Heading";
 import Button from "../blocks/Button";
 import Link from "next/link";
 
-// Validation schema
-const schema = yup.object().shape({
-  title: yup
-    .string()
-    .required("Please enter the name")
-    .min(2, "Please enter at least 2 characters"),
-  featuredImage: yup.string().required("Please select an image"),
-  categories: yup.string().required("Please select a category"),
-  description: yup
-    .string()
-    .required("Please write a description of the establishment")
-    .min(20, "Please enter at least 20 characters"),
-  excerpt: yup
-    .string()
-    .required("Please write an excerpt for the establishment")
-    .min(20, "Please enter at least 20 characters")
-    .max(300, "The excerpt is too long. Please keep it short."),
-  streetaddress: yup
-    .string()
-    .required("Please enter the address")
-    .min(3, "Please enter a valid street address"),
-  postcode: yup
-    .string()
-    .required("Please enter your post code")
-    .min(4, "Please enter a valid post code"),
-  city: yup.string().required("Please enter city").min(2, "Please enter city"),
-});
-
 export default function AddNewHotel(props) {
   const mediaUrl = props.API.API_URL + props.API.MEDIA_ENDPOINT;
   const accommodationUrl = props.API.API_URL + props.API.ACCOMMODATION_ENDPOINT;
+
+  // Validation schema
+
+  let schema = yup.object().shape({
+    title: yup
+      .string()
+      .required("Please enter the name")
+      .min(2, "Please enter at least 2 characters"),
+    featuredImage: yup.string().required("Please select an image"),
+    categories: yup.string().required("Please select a category"),
+    description: yup
+      .string()
+      .required("Please write a description of the establishment")
+      .min(20, "Please enter at least 20 characters"),
+    excerpt: yup
+      .string()
+      .required("Please write an excerpt for the establishment")
+      .min(20, "Please enter at least 20 characters")
+      .max(300, "The excerpt is too long. Please keep it short."),
+    streetaddress: yup
+      .string()
+      .required("Please enter the address")
+      .min(3, "Please enter a valid street address"),
+    postcode: yup
+      .string()
+      .required("Please enter your post code")
+      .min(4, "Please enter a valid post code"),
+    city: yup
+      .string()
+      .required("Please enter city")
+      .min(2, "Please enter city"),
+  });
+
+  if (props.editMode) {
+    schema = yup.object().shape({
+      title: yup.string(),
+
+      featuredImage: yup.string(),
+      categories: yup.string(),
+      description: yup.string(),
+
+      excerpt: yup
+        .string()
+
+        .max(300, "The excerpt is too long. Please keep it short."),
+      streetaddress: yup.string(),
+
+      postcode: yup.string(),
+
+      city: yup.string(),
+    });
+  }
 
   const facilities = [
     { name: "Parking" },
@@ -66,6 +90,7 @@ export default function AddNewHotel(props) {
   const [previewImageID, setPreviewImageID] = useState(null);
   const [previewImageUrl, setPreviewImageUrl] = useState("/image.jpg");
   const [roomAmount, setRoomAmount] = useState(1);
+  const [hotelToEdit, setHotelToEdit] = useState(false);
 
   const {
     register,
@@ -117,11 +142,18 @@ export default function AddNewHotel(props) {
   }
 
   useEffect(function () {
+    const hotelInputForm = document.querySelector("#hotelInputForm");
     const selectFeaturedImage = document.querySelector("#featuredImage");
     const selectCategory = document.querySelector("#categories");
     const checkFacilities = document.querySelector("#checkFacilities");
     const addRoom = document.querySelector("#addRoom");
     const removeRoom = document.querySelector("#removeRoom");
+    const getHotelId = document.querySelector("#hotelToEdit");
+
+    if (props.editMode) {
+      console.log(getHotelId.dataset.id);
+      setHotelToEdit(getHotelId);
+    }
 
     // Populate image options in form
     selectFeaturedImage.innerHTML = `<option value=''>Select an image</option>
@@ -182,15 +214,13 @@ export default function AddNewHotel(props) {
   }, []);
 
   async function onSubmit(data) {
-    console.log(data);
-
     const rooms = data.rooms.slice(0, roomAmount);
-    const categories = [parseInt(data.categories)];
+    // console.log(data);
 
     const accommodation = {
       status: "publish",
       title: data.title,
-      categories: categories,
+      categories: data.categories,
       featured_media: parseInt(data.featuredImage),
       content: data.description,
       excerpt: data.excerpt,
@@ -203,225 +233,293 @@ export default function AddNewHotel(props) {
         accommodation_image_gallery: [28, 38, 218, 219], // Dummy data
       },
     };
+    // console.log(accommodation);
 
     try {
-      const response = await http.post(accommodationUrl, accommodation);
-      console.log(response);
+      if (props.editMode) {
+        // Edit existing hotel
+
+        const hotelID = hotelToEdit.dataset.id;
+
+        const hotelItem = props.hotels.filter((items) => {
+          return items.id == hotelID;
+        });
+
+        const editAccommodation = hotelItem[0];
+
+        const originalRooms = hotelItem[0].acf.accommodation_rooms;
+
+        // console.log("item: ", hotelItem);
+        // Add data to edit
+        if (data.title) {
+          editAccommodation.title = data.title;
+          editAccommodation.slug = utilities.getSlugFormat(data.title);
+        }
+        if (data.categories) {
+          editAccommodation.categories = data.categories;
+        }
+        if (data.featuredImage) {
+          editAccommodation.featured_media = parseInt(data.featuredImage);
+        }
+        if (data.description) {
+          editAccommodation.content = data.description;
+        }
+        if (data.excerpt) {
+          editAccommodation.excerpt = data.excerpt;
+        }
+        if (data.streetaddress) {
+          editAccommodation.acf.accommodation_street_address =
+            data.streetaddress;
+        }
+        if (data.postcode) {
+          editAccommodation.acf.accommodation_post_code = data.postcode;
+        }
+        if (data.city) {
+          editAccommodation.acf.accommodation_city = data.city;
+        }
+        if (data.facilities) {
+          editAccommodation.acf.accommodation_facilities = data.facilities;
+        }
+        editAccommodation.acf.accommodation_rooms = utilities.getRooms(
+          rooms,
+          originalRooms
+        );
+
+        console.log("data: ", data);
+        console.log("Edit: ", editAccommodation);
+        const response = await http.put(
+          accommodationUrl + hotelID,
+          editAccommodation
+        );
+        console.log(response);
+      } else {
+        // Post new hotel
+        const response = await http.post(accommodationUrl, accommodation);
+        console.log(response);
+      }
     } catch (error) {
     } finally {
     }
   }
 
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      {/* Hotel name */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="title" name="title">
-            Name of hotel/accommodation
-          </label>
-          <input type="text" id="title" name="title" {...register("title")} />
-          {errors.title && (
-            <span className="form__warning">{errors.title.message}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Category */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="categories" name="categories">
-            Select category
-          </label>
-          <select
-            id="categories"
-            name="categories"
-            // defaultValue={"0"}
-            {...register("categories")}
-          ></select>
-          {errors.categories && (
-            <span className="form__warning">{errors.categories.message}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Featured image */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="featuredImage" name="featuredImage">
-            Choose featured image
-          </label>
-          <select
-            id="featuredImage"
-            name="featuredImage"
-            // defaultValue={"0"}
-            {...register("featuredImage")}
-          ></select>
-          {errors.featuredImage && (
-            <span className="form__warning">
-              {errors.featuredImage.message}
-            </span>
-          )}
-        </div>
-        {previewImageID ? (
-          <div className="form__image">
-            <Image
-              layout="fill"
-              objectFit="contain"
-              src={previewImageUrl}
-              alt="test"
-            />
+    <>
+      <form
+        className="form"
+        onSubmit={handleSubmit(onSubmit)}
+        id="hotelInputForm"
+      >
+        {/* Hotel name */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="title" name="title">
+              Name of hotel/accommodation
+            </label>
+            <input type="text" id="title" name="title" {...register("title")} />
+            {errors.title && (
+              <span className="form__warning">{errors.title.message}</span>
+            )}
           </div>
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
 
-      {/* Hotel excerpt */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="excerpt" name="excerpt">
-            Excerpt
-          </label>
-          <textarea
-            id="excerpt"
-            name="excerpt"
-            rows="4"
-            {...register("excerpt")}
-          ></textarea>
-          <p className="form__description">
-            Write a short excerpt for the hotel
-          </p>
-          {errors.excerpt && (
-            <span className="form__warning">{errors.excerpt.message}</span>
+        {/* Category */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="categories" name="categories">
+              Select category
+            </label>
+            <select
+              id="categories"
+              name="categories"
+              // defaultValue={"0"}
+              {...register("categories")}
+            ></select>
+            {errors.categories && (
+              <span className="form__warning">{errors.categories.message}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Featured image */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="featuredImage" name="featuredImage">
+              Choose featured image
+            </label>
+            <select
+              id="featuredImage"
+              name="featuredImage"
+              // defaultValue={"0"}
+              {...register("featuredImage")}
+            ></select>
+            {errors.featuredImage && (
+              <span className="form__warning">
+                {errors.featuredImage.message}
+              </span>
+            )}
+          </div>
+          {previewImageID ? (
+            <div className="form__image">
+              <Image
+                layout="fill"
+                objectFit="contain"
+                src={previewImageUrl}
+                alt="test"
+              />
+            </div>
+          ) : (
+            ""
           )}
         </div>
-      </div>
 
-      {/* Hotel description */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="description" name="description">
-            Content
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            rows="16"
-            {...register("description")}
-          ></textarea>
-          <p className="form__description">
-            Write some content for the hotel. Break it into paragraphs to
-            improve readability.
-          </p>
-          {errors.description && (
-            <span className="form__warning">{errors.description.message}</span>
-          )}
+        {/* Hotel excerpt */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="excerpt" name="excerpt">
+              Excerpt
+            </label>
+            <textarea
+              id="excerpt"
+              name="excerpt"
+              rows="4"
+              {...register("excerpt")}
+            ></textarea>
+            <p className="form__description">
+              Write a short excerpt for the hotel
+            </p>
+            {errors.excerpt && (
+              <span className="form__warning">{errors.excerpt.message}</span>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Facilities */}
+        {/* Hotel description */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="description" name="description">
+              Content
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              rows="16"
+              {...register("description")}
+            ></textarea>
+            <p className="form__description">
+              Write some content for the hotel. Break it into paragraphs to
+              improve readability.
+            </p>
+            {errors.description && (
+              <span className="form__warning">
+                {errors.description.message}
+              </span>
+            )}
+          </div>
+        </div>
 
-      <div className="form__group checkbox">
-        <Heading text="Facilities" size={5} customClass="form__heading" />
-        <fieldset id="checkFacilities">
-          {facilities.map((facility) => {
-            const facilityID = facility.name.replace(/\s/g, "").toLowerCase();
-            return (
-              <div key={facilityID} className="form__field">
-                <label htmlFor={facilityID}>
-                  <input
-                    type="checkbox"
-                    {...register("facilities")}
-                    id={facilityID}
-                    name="facilities"
-                    value={facility.name}
-                  />
-                  {facility.name}
-                </label>
-              </div>
-            );
-          })}
-        </fieldset>
-        {/* {errors.facilities && (
+        {/* Facilities */}
+
+        <div className="form__group checkbox">
+          <Heading text="Facilities" size={5} customClass="form__heading" />
+          <fieldset id="checkFacilities">
+            {facilities.map((facility) => {
+              const facilityID = utilities.getIdFormat(facility.name);
+              return (
+                <div key={facilityID} className="form__field">
+                  <label htmlFor={facilityID}>
+                    <input
+                      type="checkbox"
+                      {...register("facilities")}
+                      id={facilityID}
+                      name="facilities"
+                      value={facility.name}
+                    />
+                    {facility.name}
+                  </label>
+                </div>
+              );
+            })}
+          </fieldset>
+          {/* {errors.facilities && (
           <span className="form__warning">{errors.facilities.message}</span>
         )} */}
-      </div>
+        </div>
 
-      {/* Hotel address */}
-      <div className="form__group">
-        <div className="form__field">
-          <label htmlFor="streetaddress" name="streetaddress">
-            Street address
-          </label>
-          <input
-            type="text"
-            id="streetaddress"
-            name="streetaddress"
-            {...register("streetaddress")}
+        {/* Hotel address */}
+        <div className="form__group">
+          <div className="form__field">
+            <label htmlFor="streetaddress" name="streetaddress">
+              Street address
+            </label>
+            <input
+              type="text"
+              id="streetaddress"
+              name="streetaddress"
+              {...register("streetaddress")}
+            />
+            {errors.streetaddress && (
+              <span className="form__warning">
+                {errors.streetaddress.message}
+              </span>
+            )}
+          </div>
+
+          <div className="form__field">
+            <label htmlFor="postcode" name="postcode">
+              Post code
+            </label>
+            <input
+              type="text"
+              id="postcode"
+              name="postcode"
+              {...register("postcode")}
+            />
+            {errors.postcode && (
+              <span className="form__warning">{errors.postcode.message}</span>
+            )}
+          </div>
+
+          <div className="form__field">
+            <label htmlFor="city" name="city">
+              City
+            </label>
+            <input type="text" id="city" name="city" {...register("city")} />
+            {errors.city && (
+              <span className="form__warning">{errors.city.message}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Rooms */}
+        <Heading text="Rooms" size={5} customClass="form__heading" />
+        {rooms(roomAmount)}
+        <div className="form__modificators">
+          <a href="#" id="removeRoom">
+            Remove room
+          </a>
+          <a href="#" id="addRoom">
+            Add room
+          </a>
+        </div>
+
+        {/* Submit button */}
+        <div className="form__submit" type="submit">
+          <Button
+            text="Save"
+            style="success"
+            id="formSubmit"
+            type="submit"
+            short
           />
-          {errors.streetaddress && (
-            <span className="form__warning">
-              {errors.streetaddress.message}
-            </span>
-          )}
         </div>
 
-        <div className="form__field">
-          <label htmlFor="postcode" name="postcode">
-            Post code
-          </label>
-          <input
-            type="text"
-            id="postcode"
-            name="postcode"
-            {...register("postcode")}
-          />
-          {errors.postcode && (
-            <span className="form__warning">{errors.postcode.message}</span>
-          )}
+        <div className="form__success">New hotel is now created.</div>
+        <div className="form__error">
+          Something went wrong.
+          <br /> Please try again later.
         </div>
-
-        <div className="form__field">
-          <label htmlFor="city" name="city">
-            City
-          </label>
-          <input type="text" id="city" name="city" {...register("city")} />
-          {errors.city && (
-            <span className="form__warning">{errors.city.message}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Rooms */}
-      <Heading text="Rooms" size={5} customClass="form__heading" />
-      {rooms(roomAmount)}
-      <div className="form__modificators">
-        <a href="#" id="removeRoom">
-          Remove room
-        </a>
-        <a href="#" id="addRoom">
-          Add room
-        </a>
-      </div>
-
-      {/* Submit button */}
-      <div className="form__submit" type="submit">
-        <Button
-          text="Save"
-          style="success"
-          id="formSubmit"
-          type="submit"
-          short
-        />
-      </div>
-
-      <div className="form__success">New hotel is now created.</div>
-      <div className="form__error">
-        Something went wrong.
-        <br /> Please try again later.
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 
@@ -429,4 +527,10 @@ AddNewHotel.propTypes = {
   API: PropTypes.object.isRequired,
   media: PropTypes.array,
   categories: PropTypes.array,
+  hotels: PropTypes.array,
+  editMode: PropTypes.bool,
+};
+
+AddNewHotel.defaultProps = {
+  editMode: false,
 };

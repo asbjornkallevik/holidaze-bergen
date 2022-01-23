@@ -54,15 +54,15 @@ export default function Home(props) {
         fringilla.
       </p>
       <p>
-        Maecenas vitae pretium odio. Nunc varius urna libero, sed condimentum
-        ipsum dapibus vitae. Nullam sed est nec dui semper lacinia. Etiam a
-        lorem ut turpis lobortis pretium id vel urna. Morbi tincidunt pharetra
-        gravida. Ut quis tortor vel nisl suscipit facilisis. Nunc sodales turpis
-        convallis mauris tristique bibendum. Nam eu consectetur leo. Fusce
-        gravida sem sem, id convallis risus tempus eu. Cras vel odio sem. In hac
-        habitasse platea dictumst. Nulla facilisi. Proin feugiat pharetra
-        mauris, vitae pellentesque justo aliquam a. Nam quis pharetra erat. In
-        convallis maximus efficitur.
+        Maecenas vitae <Link href="/"> this is a link</Link>pretium odio. Nunc
+        varius urna libero, sed condimentum ipsum dapibus vitae. Nullam sed est
+        nec dui semper lacinia. Etiam a lorem ut turpis lobortis pretium id vel
+        urna. Morbi tincidunt pharetra gravida. Ut quis tortor vel nisl suscipit
+        facilisis. Nunc sodales turpis convallis mauris tristique bibendum. Nam
+        eu consectetur leo. Fusce gravida sem sem, id convallis risus tempus eu.
+        Cras vel odio sem. In hac habitasse platea dictumst. Nulla facilisi.
+        Proin feugiat pharetra mauris, vitae pellentesque justo aliquam a. Nam
+        quis pharetra erat. In convallis maximus efficitur.
       </p>
       <Heading text="Heading 3" size={3} />
       <Heading text="Heading 4" size={4} />

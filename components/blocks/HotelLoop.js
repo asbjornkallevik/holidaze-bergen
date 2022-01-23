@@ -37,7 +37,7 @@ export default function HotelLoop(props) {
       }}
       onReachBeginning={(swiper) => {
         setTimeout(function () {
-          swiper.params.mousewheel.releaseOnEdges = true;
+          // swiper.params.mousewheel.releaseOnEdges = true;
         }, 750);
       }}
     >

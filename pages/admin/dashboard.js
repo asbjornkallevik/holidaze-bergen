@@ -34,7 +34,11 @@ export default function dashboard(props) {
         <section className="dashboard__wrapper">
           <section className="dashboard__menu">
             <div className="dashboard__edit">
-              <ButtonLink text="Edit a hotel" style="primary" link="/add-new" />
+              <ButtonLink
+                text="Edit a hotel"
+                style="primary"
+                link="/admin/edit-hotel"
+              />
             </div>
             <div className="dashboard__add">
               <ButtonLink
@@ -119,33 +123,33 @@ export default function dashboard(props) {
 export async function getStaticProps() {
   const requestsUrl = API.API_URL + API.REQUESTS_ENDPOINT;
 
-  let data = [];
+  let requestData = [];
   let requests = [];
 
   try {
-    const response = await axios.get(requestsUrl);
-    data = response.data;
-    console.log(data);
+    const responseRequests = await axios.get(requestsUrl);
+    requestData = responseRequests.data;
 
-    for (let i = 0; i < data.length; i++) {
-      const adults = data[i].acf.request_adults.match(/\d+/)[0];
-      const children = data[i].acf.request_children.match(/\d+/)[0];
+    // Loop through requests
+    for (let i = 0; i < requestData.length; i++) {
+      const adults = requestData[i].acf.request_adults.match(/\d+/)[0];
+      const children = requestData[i].acf.request_children.match(/\d+/)[0];
       const guests = {
         adults: adults,
         children: children,
       };
 
       requests.push({
-        id: data[i].id,
-        created: data[i].date,
-        title: data[i].title.rendered,
-        name: data[i].acf.request_name,
-        email: data[i].acf.request_email,
-        checkIn: data[i].acf.request_check_in,
-        checkOut: data[i].acf.request_check_out,
-        roomName: data[i].acf.request_room_name,
+        id: requestData[i].id,
+        created: requestData[i].date,
+        title: requestData[i].title.rendered,
+        name: requestData[i].acf.request_name,
+        email: requestData[i].acf.request_email,
+        checkIn: requestData[i].acf.request_check_in,
+        checkOut: requestData[i].acf.request_check_out,
+        roomName: requestData[i].acf.request_room_name,
         guests: guests,
-        message: data[i].acf.request_message,
+        message: requestData[i].acf.request_message,
       });
     }
   } catch (error) {

@@ -86,3 +86,10 @@ a {
     font-size: $font-step-1;
   }
 }
+
+.error-message {
+  display: none;
+  font-size: $font-step--1;
+  text-align: center;
+  color: $color-orange;
+}
