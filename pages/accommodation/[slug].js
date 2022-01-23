@@ -48,7 +48,10 @@ export default function Slug(props) {
         </div>
         <div className="single-page__location">
           <Heading text="Location" size={4} />
-          Address...
+          <p>{hotel.streetaddress}</p>
+          <p>
+            {hotel.postcode}, {hotel.city}
+          </p>
         </div>
       </section>
       <section className="single-page__image-carousel">
@@ -126,6 +129,9 @@ export async function getStaticProps({ params }) {
       imageUrl: imageUrl,
       rooms: data[0].acf.accommodation_rooms,
       facilities: data[0].acf.accommodation_facilities,
+      streetaddress: data[0].acf.accommodation_street_address,
+      postcode: data[0].acf.accommodation_post_code,
+      city: data[0].acf.accommodation_city,
       imageGallery: imageGallery,
     };
   } catch (error) {
