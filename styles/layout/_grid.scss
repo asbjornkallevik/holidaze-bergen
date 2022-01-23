@@ -13,6 +13,9 @@
   }
   .alignwide {
     grid-column: 2 / 12;
+    @media (max-width: $s) {
+      grid-column: 1 / 13;
+    }
   }
   .alignhalf {
     grid-column: 1 / span 6;

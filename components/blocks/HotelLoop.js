@@ -25,6 +25,17 @@ export default function HotelLoop(props) {
         // transformEl: "p",
         slideShadows: false,
       }}
+      breakpoints={{
+        900: {
+          slidesPerView: 2,
+          spaceBetween: 400,
+        },
+        300: {
+          slidesPerView: 1,
+          spaceBetween: 100,
+          centeredSlides: false,
+        },
+      }}
       onSlideChange={(swiper) => {
         setTimeout(function () {
           swiper.params.mousewheel.releaseOnEdges = false;

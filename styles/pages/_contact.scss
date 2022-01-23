@@ -1,0 +1,33 @@
+.contact {
+  h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+  &__address {
+    @include alignshort($start: 2);
+    margin-top: 40px;
+  }
+  &__image {
+    @include alignhalf($start: 6);
+    margin-top: 40px;
+    position: relative;
+    background-color: grey;
+  }
+  &__form {
+    @include alignhalf($start: 4);
+    margin-top: 40px;
+  }
+  @media (max-width: $m) {
+    &__address {
+      grid-column: 1 / 13;
+      text-align: center;
+    }
+    &__image {
+      height: 400px;
+      grid-column: 1 / 13;
+    }
+    &__form {
+      grid-column: 1 / 13;
+    }
+  }
+}

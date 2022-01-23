@@ -136,7 +136,7 @@
     background-color: $color-secondary;
   }
 
-  /* @media (max-width: 999px) {
+  @media (max-width: $l) {
     width: 90%;
-  } */
+  }
 }

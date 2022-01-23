@@ -1,14 +1,13 @@
 import PropTypes from "prop-types";
 import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 function Layout({ children, page }) {
   return (
     <>
       <Header page={page} />
       <main className={`container ${page}`}>{children}</main>
-      <footer className="page-footer">
-        <p>Made by Asbj&oslash;rn Kallevik</p>
-      </footer>
+      <Footer />
     </>
   );
 }

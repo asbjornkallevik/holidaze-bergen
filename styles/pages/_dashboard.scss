@@ -1,7 +1,4 @@
 .dashboard {
-  &__wrapper {
-    // margin-top: 20px;
-  }
   &__menu {
     display: flex;
     justify-content: center;
@@ -26,5 +23,17 @@
   }
   &__hotel-requests {
     width: 100%;
+  }
+  @media (max-width: $m) {
+    &__messages {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: $s) {
+    &__menu {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }

@@ -66,6 +66,17 @@ export default function Header() {
   useEffect(() => {
     const loginBtn = document.querySelector("#loginBtn");
     const logoutBtn = document.querySelector("#logoutBtn");
+    const header = document.querySelector(".page-header");
+
+    window.onscroll = () => {
+      const scrollTop = window.pageYOffset;
+
+      if (scrollTop > 100) {
+        header.classList.add("fillHeader");
+      } else {
+        header.classList.remove("fillHeader");
+      }
+    };
 
     // Display log in / log out button
     if (auth) {

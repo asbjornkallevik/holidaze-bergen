@@ -20,21 +20,21 @@ const schema = yup.object().shape({
     .string()
     .required("Please enter your email address")
     .email("Please enter a valid email address"),
-  checkIn: yup.string().required("Please select a check-in date"),
-  checkOut: yup.string().required("Please select a check-out date"),
+  message: yup
+    .string()
+    .required("Please enter a message")
+    .min(10, "Please enter at least 10 characters"),
 });
 
-export default function HotelRequestForm({ hotel, API }) {
-  const requestUrl = API.API_URL + API.REQUESTS_ENDPOINT;
+export default function HotelRequestForm({ API }) {
+  const contactUrl = API.API_URL + API.CONTACT_ENDPOINT;
   const authUrl = API.API_BASE_URL + API.TOKEN_PATH;
 
   const [requestSuccess, setRequestSuccess] = useState(0);
-  const [auth, setAuth] = useContext(AuthContext);
   const [formReset, setFormReset] = useState(false);
   const [showSubmit, setShowSubmit] = useState(true);
+  const [auth, setAuth] = useContext(AuthContext);
   const http = useAxios();
-
-  let rooms = "";
 
   // Authorize guest user to send messages to API
   async function guestAuth(guest) {
@@ -44,6 +44,7 @@ export default function HotelRequestForm({ hotel, API }) {
       });
     } catch (error) {
       console.log("error", error);
+    } finally {
     }
   }
 
@@ -53,24 +54,12 @@ export default function HotelRequestForm({ hotel, API }) {
       const form = document.querySelector(".form");
       const formSuccess = document.querySelector(".form__success");
       const formError = document.querySelector(".form__error");
-      const selectRooms = document.querySelector("#room");
-
-      // Populate hotel room options in form
-      selectRooms.innerHTML = "";
-      for (let i = 0; i < hotel.rooms.length; i++) {
-        const option = document.createElement("option");
-
-        option.setAttribute("value", i);
-        option.innerHTML = `${hotel.rooms[i].accommodation_rooms_name}, NOK ${hotel.rooms[i].accommodation_rooms_price},- per night`;
-
-        selectRooms.appendChild(option);
-      }
 
       // Display success text for message sent
-
       if (requestSuccess === 1) {
         formSuccess.classList.add("show");
         formError.classList.remove("show");
+        form.reset();
       } else if (requestSuccess === 2) {
         formSuccess.classList.remove("show");
         formError.classList.add("show");
@@ -82,12 +71,11 @@ export default function HotelRequestForm({ hotel, API }) {
       if (formReset) {
         form.reset();
       }
-
-      /* form.addEventListener("reset", () => {
+      /*  form.addEventListener("reset", () => {
         setRequestSuccess(0);
       }); */
     },
-    [requestSuccess, hotel.rooms, formReset]
+    [requestSuccess, formReset, auth]
   );
 
   const {
@@ -97,38 +85,28 @@ export default function HotelRequestForm({ hotel, API }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   async function onSubmit(data) {
+    // Check authorization
+    if (!auth) {
+      guestAuth(API.GUEST_USER);
+    }
     console.log(data);
 
-    const roomName = data.room
-      ? hotel.rooms[parseInt(data.room)].accommodation_rooms_name
-      : hotel.rooms[0].accommodation_rooms_name;
+    console.log("auth: ", auth);
 
-    const hotelRequest = {
-      title: hotel.title,
-      content: data.content,
+    let contactMessage = {
+      title: data.name,
+      content: data.message,
       status: "publish",
       acf: {
-        request_hotel_id: hotel.id.toString(),
-        request_name: data.name,
-        request_email: data.email,
-        request_check_in: data.checkIn,
-        request_check_out: data.checkOut,
-        request_room_name: roomName,
-        request_adults: data.guestsAdults,
-        request_children: data.guestsChildren,
-        request_message: data.message,
+        contact_email: data.email,
       },
     };
 
     try {
-      // Check authorization
-      if (!auth) {
-        guestAuth(API.GUEST_USER);
-      }
-
       const response = await http
-        .post(requestUrl, hotelRequest)
+        .post(contactUrl, contactMessage)
         .then((response) => {
+          console.log("gagaga");
           console.log(response);
           if (response.status === 201) {
             setRequestSuccess(1);
@@ -137,11 +115,10 @@ export default function HotelRequestForm({ hotel, API }) {
             setRequestSuccess(2);
           }
         });
-
       // console.log(login.data);
     } catch (error) {
     } finally {
-      setFormReset(true);
+      //   setFormReset(true);
       setAuth(null);
     }
   }
@@ -149,7 +126,7 @@ export default function HotelRequestForm({ hotel, API }) {
   return (
     <div>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        {/* First name */}
+        {/* Name */}
         <div className="form__group">
           <div className="form__field">
             <label htmlFor="name" name="name">
@@ -179,104 +156,14 @@ export default function HotelRequestForm({ hotel, API }) {
           </div>
         </div>
 
-        {/* Check-in and check-out*/}
-        <div className="form__group">
-          <div>
-            <label htmlFor="checkIn" name="checkIn">
-              Check-in date
-            </label>
-            <input
-              type="date"
-              id="checkIn"
-              name="checkIn"
-              {...register("checkIn")}
-            />
-            {errors.checkIn && (
-              <span className="form__warning">{errors.checkIn.message}</span>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="checkOut" name="checkOut">
-              Check-out date
-            </label>
-            <input
-              type="date"
-              id="checkOut"
-              name="checkOut"
-              {...register("checkOut")}
-            />
-            {errors.checkOut && (
-              <span className="form__warning">{errors.checkOut.message}</span>
-            )}
-          </div>
-        </div>
-
-        {/* Room */}
-        <div className="form__group">
-          <div className="form__field">
-            <label htmlFor="room" name="room">
-              Desired room
-            </label>
-            <select
-              id="room"
-              name="room"
-              defaultValue={"0"}
-              {...register("room")}
-            >
-              {rooms}
-            </select>
-          </div>
-        </div>
-
-        {/* Guests */}
-        <div className="form__group">
-          <div className="form__field">
-            <label htmlFor="guestsAdults" name="guestsAdults">
-              Adults
-            </label>
-            <select
-              id="guestsAdults"
-              name="guestsAdults"
-              className="short"
-              defaultValue={"a2"}
-              {...register("guestsAdults")}
-            >
-              <option value="a1">1</option>
-              <option value="a2">2</option>
-              <option value="a3">3</option>
-              <option value="a4">4</option>
-            </select>
-          </div>
-
-          <div className="form__field">
-            <label htmlFor="guestsChildren" name="guestsChildren">
-              Children
-            </label>
-            <select
-              id="guestsChildren"
-              name="guestsChildren"
-              className="short"
-              defaultValue={"c0"}
-              {...register("guestsChildren")}
-            >
-              <option value="c0">0</option>
-              <option value="c1">1</option>
-              <option value="c2">2</option>
-              <option value="c3">3</option>
-              <option value="c4">4</option>
-            </select>
-          </div>
-        </div>
-
         {/* Message */}
         <div className="form__group">
           <div className="form__field">
-            <label htmlFor="message">Optional message</label>
+            <label htmlFor="message">Your message</label>
             <textarea
               id="message"
               name="message"
-              rows="4"
+              rows="8"
               {...register("message")}
             ></textarea>
             {errors.message && (
@@ -287,7 +174,7 @@ export default function HotelRequestForm({ hotel, API }) {
 
         {/* Submit button */}
         {showSubmit ? (
-          <div className="form__submit" type="submit">
+          <div className="form__submit">
             <Button
               text="Send"
               style="success"
@@ -303,7 +190,7 @@ export default function HotelRequestForm({ hotel, API }) {
 
         <div className="form__success">
           Your request is now sent.
-          <br /> {hotel.title} will get back to you within 24 hours.
+          <br /> We will get back to you within 24 hours.
         </div>
         <div className="form__error">
           Something went wrong when sending the message.
@@ -315,6 +202,5 @@ export default function HotelRequestForm({ hotel, API }) {
 }
 
 HotelRequestForm.propTypes = {
-  hotel: PropTypes.object,
   API: PropTypes.object,
 };

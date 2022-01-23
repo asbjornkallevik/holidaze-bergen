@@ -12,6 +12,7 @@ export const API = {
   API_URL: process.env.API_URL,
   ACCOMMODATION_ENDPOINT: "accommodation/",
   REQUESTS_ENDPOINT: "hotel-request/",
+  CONTACT_ENDPOINT: "contact/",
   MEDIA_ENDPOINT: "media/",
   CATEGORIES_ENDPOINT: "categories/",
   TOKEN_PATH: "jwt-auth/v1/token",

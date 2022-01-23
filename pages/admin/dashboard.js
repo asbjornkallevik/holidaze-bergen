@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-
+import { utilities } from "../../scripts/utilities";
 import { API } from "../../constants/api";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
@@ -17,12 +17,14 @@ import TopCover from "../../components/blocks/TopCover";
 import Message from "../../components/admin/Message";
 import ButtonLink from "../../components/blocks/ButtonLink";
 import LoginForm from "../../components/forms/LoginForm";
+import Link from "next/link";
 
 export default function dashboard(props) {
   const [auth, setAuth] = useContext(AuthContext);
   const requests = props.requests;
+  const contactMessages = props.contactMessages;
 
-  console.log("Dashboard: ", auth);
+  console.log("Dashboard: ", contactMessages);
   return (
     <Layout page="dashboard">
       <Head title="Dashboard" />
@@ -53,16 +55,23 @@ export default function dashboard(props) {
           <div className="dashboard__messages">
             <section className="dashboard__admin-messages">
               <Heading text="Contact messages" size={3} />
-              <Message
-                created="000000"
-                content={{ title: "test", id: 0 }}
-                auth={auth}
-                API={props.API}
-              >
-                <div className="message__excerpt">
-                  This section is under construction
-                </div>
-              </Message>
+              {contactMessages.map((message) => {
+                return (
+                  <Message
+                    key={message.id}
+                    content={message}
+                    auth={auth}
+                    API={props.API}
+                  >
+                    <Heading text={message.name} size={4} />
+                    <p>
+                      <Link href={`mailto:${message.email}`}>
+                        {message.email}
+                      </Link>
+                    </p>
+                  </Message>
+                );
+              })}
             </section>
             <section className="dashboard__hotel-requests">
               <Heading text="Hotel requests" size={3} />
@@ -122,13 +131,20 @@ export default function dashboard(props) {
 
 export async function getStaticProps() {
   const requestsUrl = API.API_URL + API.REQUESTS_ENDPOINT;
+  const contactUrl = API.API_URL + API.CONTACT_ENDPOINT;
 
   let requestData = [];
   let requests = [];
+  let contactData = [];
+  let contactMessages = [];
 
   try {
     const responseRequests = await axios.get(requestsUrl);
     requestData = responseRequests.data;
+    const contactRequests = await axios.get(contactUrl);
+    contactData = contactRequests.data;
+
+    console.log(contactData);
 
     // Loop through requests
     for (let i = 0; i < requestData.length; i++) {
@@ -150,6 +166,20 @@ export async function getStaticProps() {
         roomName: requestData[i].acf.request_room_name,
         guests: guests,
         message: requestData[i].acf.request_message,
+        type: "hotelRequest",
+      });
+    }
+
+    // Loop through contact messages
+    for (let i = 0; i < contactData.length; i++) {
+      const message = utilities.removeHTML(contactData[i].content.rendered);
+      contactMessages.push({
+        id: contactData[i].id,
+        created: contactData[i].date,
+        name: contactData[i].title.rendered,
+        email: contactData[i].acf.contact_email,
+        message: message,
+        type: "contact",
       });
     }
   } catch (error) {
@@ -160,6 +190,7 @@ export async function getStaticProps() {
   return {
     props: {
       requests: requests,
+      contactMessages: contactMessages,
       API: API,
     },
   };

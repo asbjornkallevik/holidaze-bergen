@@ -21,6 +21,10 @@ body {
 %heading {
   @include font-extrabold();
   text-transform: uppercase;
+  @media (max-width: $s) {
+    text-align: center;
+    word-wrap: break-word;
+  }
 }
 h1 {
   @extend %heading;
@@ -69,6 +73,14 @@ h6 {
       display: block;
     }
   }
+  @media (max-width: $m) {
+    &__adjectives,
+    &__tagline {
+      p {
+        font-size: $font-step-4;
+      }
+    }
+  }
 }
 a {
   color: $color-orange;
@@ -84,6 +96,20 @@ a {
 
   &.admin {
     font-size: $font-step-1;
+  }
+}
+.page-footer {
+  .menu__item {
+    font-size: $font-step--1;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  h3 {
+    font-size: $font-step--1;
   }
 }
 

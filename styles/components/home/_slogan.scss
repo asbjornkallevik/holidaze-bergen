@@ -50,4 +50,29 @@
       margin: 0;
     }
   }
+
+  @media (max-width: $m) {
+    flex-direction: column;
+    height: 200px;
+    margin-top: 10vh;
+    &__adjectives,
+    &__tagline {
+      width: 100%;
+      justify-content: center;
+    }
+    &__adjectives {
+      height: 200px;
+      .swiper {
+        .swiper-slide {
+          justify-content: center;
+          align-items: center;
+          p {
+            // cursor: ns-resize;
+            cursor: grab;
+          }
+        }
+        //   width: 200px;
+      }
+    }
+  }
 }

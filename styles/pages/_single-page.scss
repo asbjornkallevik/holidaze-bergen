@@ -4,7 +4,9 @@
   }
   &__details {
     @include alignshort($start: 2);
-    // background-color: $color-highlight-lighter;
+    @media (max-width: $l) {
+      grid-column: 2 / 12;
+    }
 
     > *:not(:first-child) {
       margin-top: 24px;
@@ -13,16 +15,15 @@
   &__content-heading {
     margin-bottom: 0;
   }
-  &__content {
-    p {
-      // margin: 0;
-    }
-  }
 
   &__image-carousel {
     @include alignhalf($start: 6);
-
-    // background-color: grey;
-    // height: 400px;
+    @media (max-width: $l) {
+      grid-column: 2 / 12;
+      height: 440px;
+    }
+    @media (max-width: $m) {
+      grid-column: 1 / 13;
+    }
   }
 }

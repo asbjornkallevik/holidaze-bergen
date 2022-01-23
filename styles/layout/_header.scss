@@ -4,9 +4,14 @@
   width: 100%;
   position: fixed;
   z-index: 2;
+  background-color: transparent;
   white-space: nowrap;
   overflow: hidden;
   color: $color-white;
+
+  @media (max-width: $l) {
+    background-color: $color-primary;
+  }
 
   &__hamburger {
     position: absolute;
@@ -162,4 +167,7 @@
       opacity: 1;
     }
   }
+}
+.fillHeader {
+  background-color: $color-primary;
 }

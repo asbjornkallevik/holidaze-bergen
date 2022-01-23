@@ -14,4 +14,9 @@
     bottom: 80px;
     right: 40px;
   }
+  &__hotel-loop {
+    @media (max-width: $m) {
+      grid-column: 1 / 13;
+    }
+  }
 }

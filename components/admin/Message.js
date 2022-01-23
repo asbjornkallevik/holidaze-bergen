@@ -13,18 +13,21 @@ import Heading from "../typography/Heading";
 
 export default function Message(props) {
   const requestUrl = props.API.API_URL + props.API.REQUESTS_ENDPOINT;
+  const contactUrl = props.API.API_URL + props.API.CONTACT_ENDPOINT;
   const http = useAxios();
 
   const [messageOpen, setMessageOpen] = useState(false);
 
-  async function handleDelete(messageID) {
-    console.log("Deleting message ", messageID);
-    console.log(requestUrl + messageID);
-    const message = requestUrl + messageID;
-
+  async function handleDelete(messageID, messageType) {
     try {
-      const response = await http.delete(message);
-      console.log(response);
+      if (messageType === "hotelRequest") {
+        const message = requestUrl + messageID;
+        const response = await http.delete(message);
+        console.log(response);
+      } else if (messageType === "contact") {
+        const message = contactUrl + messageID;
+        const response = await http.delete(message);
+      }
     } catch (error) {
     } finally {
       location.reload();
@@ -58,9 +61,10 @@ export default function Message(props) {
     deleteMessage.addEventListener("click", (e) => {
       const finalDelete = modal.querySelector(".finalDelete");
       let messageID = e.currentTarget.dataset.id;
+      let messageType = e.currentTarget.dataset.type;
       modal.classList.add("open");
       finalDelete.addEventListener("click", () => {
-        handleDelete(messageID).then(() => {
+        handleDelete(messageID, messageType).then(() => {
           modal.classList.remove("open");
         });
       });
@@ -87,7 +91,10 @@ export default function Message(props) {
     <div className="message">
       <div className="message__header">
         <div className="message__title">
-          <Heading text={props.content.title} size={5} />
+          <Heading
+            text={props.content.title ? props.content.title : ""}
+            size={5}
+          />
         </div>
         {/* DELETE BUTTON */}
         <div className="message__delete">
@@ -96,6 +103,7 @@ export default function Message(props) {
               className="wrapper message__delete-btn"
               id={`delete${props.content.id}`}
               data-id={props.content.id}
+              data-type={props.content.type}
             >
               <div className="text">Delete</div>
               <div className="icon">
@@ -139,7 +147,11 @@ export default function Message(props) {
       <section className="modal message-modal" id={`#modal${props.content.id}`}>
         <div className="modal__dialog">
           <div className="modal__header">
-            <Heading text="Delete test" size={3} customClass="modal__heading" />
+            <Heading
+              text="Delete message"
+              size={3}
+              customClass="modal__heading"
+            />
             <Button
               text="X"
               style="secondary"

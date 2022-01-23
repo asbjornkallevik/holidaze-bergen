@@ -1,0 +1,84 @@
+.about-us {
+  &__intro {
+    margin-top: 40px;
+    display: flex;
+  }
+  &__intro-image {
+    position: relative;
+    width: 40%;
+  }
+  &__intro-text {
+    background-color: $color-primary-lighter;
+    padding: 40px;
+    width: 60%;
+  }
+  &__goals {
+    @include alignshort($start: 3);
+  }
+  &__partners {
+    @include alignshort($start: 8);
+  }
+
+  &__bergen {
+    margin-top: 40px;
+
+    display: flex;
+    // min-height: 400px;
+  }
+  &__bergen-image {
+    position: relative;
+    width: 40%;
+  }
+  &__bergen-text {
+    background-color: $color-highlight-lighter;
+    padding: 40px;
+    width: 60%;
+  }
+  &__contact {
+    margin-top: 40px;
+
+    display: flex;
+    // align-items: flex-end;
+    // min-height: 400px;
+  }
+  &__contact-button {
+    position: relative;
+    width: 40%;
+    align-self: flex-end;
+  }
+  &__contact-text {
+    // background-color: $color-highlight-lighter;
+    padding: 40px;
+    padding-bottom: 0;
+    width: 60%;
+  }
+
+  @media (max-width: $m) {
+    &__intro,
+    &__bergen,
+    &__contact {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__intro-image,
+    &__bergen-image,
+    &__contact-button {
+      width: 100%;
+      height: 400px;
+    }
+    &__intro-text,
+    &__bergen-text,
+    &__contact-text {
+      width: 100%;
+    }
+
+    &__goals {
+      grid-column: 2 / 12;
+    }
+    &__partners {
+      grid-column: 2 / 12;
+    }
+  }
+}
