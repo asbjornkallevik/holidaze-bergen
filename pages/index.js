@@ -1,10 +1,7 @@
-import dynamic from "next/dynamic";
 import { API } from "../constants/api";
 import axios from "axios";
-const Layout = dynamic(() => import("../components/layout/Layout"), {
-  ssr: false,
-});
 
+import Layout from "../components/layout/Layout";
 import Head from "../components/layout/Head";
 import Heading from "../components/typography/Heading";
 
@@ -14,8 +11,6 @@ import HolidazeSlogan from "../components/home/HolidazeSlogan";
 import HotelLoop from "../components/blocks/HotelLoop";
 import HotelSearch from "../components/forms/HotelSearch";
 import ButtonLink from "../components/blocks/ButtonLink";
-import Link from "next/link";
-import Image from "next/image";
 
 export default function Home(props) {
   const heroVideo = require("../public/videos/bergen_v2.mp4");

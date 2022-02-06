@@ -1,14 +1,10 @@
-import dynamic from "next/dynamic";
 import { utilities } from "../../scripts/utilities";
 import { API } from "../../constants/api";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 
-const Layout = dynamic(() => import("../../components/layout/Layout"), {
-  ssr: false,
-});
-// import Layout from "../../components/layout/Layout";
+import Layout from "../../components/layout/Layout";
 import Head from "../../components/layout/Head";
 import Heading from "../../components/typography/Heading";
 

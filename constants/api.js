@@ -17,7 +17,7 @@ export const API = {
   CATEGORIES_ENDPOINT: "categories/",
   TOKEN_PATH: "jwt-auth/v1/token",
   GUEST_USER: {
-    username: "appexdev",
-    password: "appexdev",
+    username: "guest",
+    password: "guest123",
   },
 };

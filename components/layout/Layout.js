@@ -1,6 +1,12 @@
+import dynamic from "next/dynamic";
+
 import PropTypes from "prop-types";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+const Header = dynamic(() => import("../header/Header"), {
+  ssr: false,
+});
+const Footer = dynamic(() => import("../footer/Footer"), {
+  ssr: false,
+});
 
 function Layout({ children, page }) {
   return (

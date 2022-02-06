@@ -34,6 +34,7 @@ export default function HotelRequestForm({ API }) {
   const [formReset, setFormReset] = useState(false);
   const [showSubmit, setShowSubmit] = useState(true);
   const [auth, setAuth] = useContext(AuthContext);
+  const [guestLogin, setGuestLogin] = useState(false);
   const http = useAxios();
 
   // Authorize guest user to send messages to API
@@ -71,6 +72,13 @@ export default function HotelRequestForm({ API }) {
       if (formReset) {
         form.reset();
       }
+      if (guestLogin) {
+        // Submit form
+        const submitButton = document.querySelector("#formSubmit");
+        submitButton.click();
+        setGuestLogin(false);
+      }
+
       /*  form.addEventListener("reset", () => {
         setRequestSuccess(0);
       }); */
@@ -88,10 +96,8 @@ export default function HotelRequestForm({ API }) {
     // Check authorization
     if (!auth) {
       guestAuth(API.GUEST_USER);
+      setGuestLogin(true);
     }
-    console.log(data);
-
-    console.log("auth: ", auth);
 
     let contactMessage = {
       title: data.name,
@@ -106,7 +112,6 @@ export default function HotelRequestForm({ API }) {
       const response = await http
         .post(contactUrl, contactMessage)
         .then((response) => {
-          console.log("gagaga");
           console.log(response);
           if (response.status === 201) {
             setRequestSuccess(1);
@@ -115,7 +120,6 @@ export default function HotelRequestForm({ API }) {
             setRequestSuccess(2);
           }
         });
-      // console.log(login.data);
     } catch (error) {
     } finally {
       //   setFormReset(true);

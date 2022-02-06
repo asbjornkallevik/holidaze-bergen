@@ -1,9 +1,7 @@
-import dynamic from "next/dynamic";
 import { API } from "../constants/api";
 import axios from "axios";
-const Layout = dynamic(() => import("../components/layout/Layout"), {
-  ssr: false,
-});
+
+import Layout from "../components/layout/Layout";
 import Head from "../components/layout/Head";
 
 import Heading from "../components/typography/Heading";
