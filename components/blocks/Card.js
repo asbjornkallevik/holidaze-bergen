@@ -4,7 +4,6 @@ import ButtonLink from "./ButtonLink";
 import Facilities from "../accommodation/Facilities";
 import Triangle from "../layout/Triangle";
 import Image from "next/image";
-import dummyImg from "../..//public/images/dummy-img.jpg";
 
 function Card(props) {
   const cardClass = props.layoutWide ? "card card--wide" : "card";

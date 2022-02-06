@@ -17,8 +17,8 @@ function ButtonLink({ text, style, link, id, short, customClass, left }) {
   btnClass += customClass ? " " + customClass : "";
 
   return (
-    <Link href={link} passHref>
-      <a className={btnClass} id={id} type="submit">
+    <Link href={link}>
+      <a className={btnClass} id={id}>
         {text}
       </a>
     </Link>
