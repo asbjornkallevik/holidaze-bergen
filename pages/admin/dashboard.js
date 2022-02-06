@@ -20,7 +20,6 @@ export default function dashboard(props) {
   const requests = props.requests;
   const contactMessages = props.contactMessages;
 
-  console.log("Dashboard: ", contactMessages);
   return (
     <Layout page="dashboard">
       <Head title="Dashboard" />

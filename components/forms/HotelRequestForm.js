@@ -97,8 +97,6 @@ export default function HotelRequestForm({ hotel, API }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   async function onSubmit(data) {
-    console.log(data);
-
     const roomName = data.room
       ? hotel.rooms[parseInt(data.room)].accommodation_rooms_name
       : hotel.rooms[0].accommodation_rooms_name;
@@ -129,7 +127,6 @@ export default function HotelRequestForm({ hotel, API }) {
       const response = await http
         .post(requestUrl, hotelRequest)
         .then((response) => {
-          console.log(response);
           if (response.status === 201) {
             setRequestSuccess(1);
             setShowSubmit(false);

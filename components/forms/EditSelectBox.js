@@ -121,7 +121,6 @@ export default function EditSelectBox(props) {
 
       // Hotel selector change event
       selectHotel.addEventListener("change", () => {
-        console.log(selectHotel.options[selectHotel.selectedIndex]);
         if (selectHotel.value) {
           editButton.style.display = "flex";
           editButton.innerHTML = `Edit ${

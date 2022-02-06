@@ -34,11 +34,10 @@ export default function LoginForm(props) {
   async function onSubmit(data) {
     setSubmitting(true);
     setLoginError(null);
-    console.log(data);
 
     try {
       const response = await axios.post(authUrl, data);
-      console.log(response.data);
+
       setAuth(response.data);
 
       router.push("/admin/dashboard");

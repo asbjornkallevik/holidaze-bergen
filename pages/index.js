@@ -58,7 +58,6 @@ export async function getStaticProps() {
         imageUrl = imageUrl.data.source_url;
       }
 
-      console.log(data[i].acf.accommodation_facilities);
       items.push({
         id: data[i].id,
         title: data[i].title.rendered,

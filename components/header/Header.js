@@ -53,7 +53,7 @@ export default function Header() {
           : "menu__item admin",
     },
   ];
-  console.log(auth);
+  // console.log(auth);
   // Show dashboard in menu only if logged in
   if (!auth) {
     menuItems = menuItems.filter((items) => items.public === true);

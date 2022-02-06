@@ -79,7 +79,6 @@ export async function getStaticProps() {
         acf: hotelData[i].acf,
       });
     }
-    console.log(hotels);
   } catch (error) {
     console.log(error);
   } finally {

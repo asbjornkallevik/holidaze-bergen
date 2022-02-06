@@ -151,7 +151,6 @@ export default function AddNewHotel(props) {
     const getHotelId = document.querySelector("#hotelToEdit");
 
     if (props.editMode) {
-      console.log(getHotelId.dataset.id);
       setHotelToEdit(getHotelId);
     }
 
@@ -285,17 +284,13 @@ export default function AddNewHotel(props) {
           originalRooms
         );
 
-        console.log("data: ", data);
-        console.log("Edit: ", editAccommodation);
         const response = await http.put(
           accommodationUrl + hotelID,
           editAccommodation
         );
-        console.log(response);
       } else {
         // Post new hotel
         const response = await http.post(accommodationUrl, accommodation);
-        console.log(response);
       }
     } catch (error) {
     } finally {

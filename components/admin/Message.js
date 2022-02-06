@@ -23,7 +23,6 @@ export default function Message(props) {
       if (messageType === "hotelRequest") {
         const message = requestUrl + messageID;
         const response = await http.delete(message);
-        console.log(response);
       } else if (messageType === "contact") {
         const message = contactUrl + messageID;
         const response = await http.delete(message);

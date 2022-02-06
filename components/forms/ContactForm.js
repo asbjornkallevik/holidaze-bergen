@@ -112,7 +112,6 @@ export default function HotelRequestForm({ API }) {
       const response = await http
         .post(contactUrl, contactMessage)
         .then((response) => {
-          console.log(response);
           if (response.status === 201) {
             setRequestSuccess(1);
             setShowSubmit(false);
