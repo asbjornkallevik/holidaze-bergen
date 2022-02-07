@@ -24,6 +24,9 @@
   &__hotel-requests {
     width: 100%;
   }
+  &__login {
+    margin: 0 auto;
+  }
   @media (max-width: $m) {
     &__messages {
       flex-direction: column;

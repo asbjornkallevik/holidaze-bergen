@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { utilities } from "../../scripts/utilities";
 import { API } from "../../constants/api";
 import { useContext, useEffect } from "react";
@@ -10,13 +11,12 @@ import Heading from "../../components/typography/Heading";
 
 import heroImg from "../../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../../components/blocks/TopCover";
-import Message from "../../components/admin/Message";
-import ButtonLink from "../../components/blocks/ButtonLink";
-import LoginForm from "../../components/forms/LoginForm";
-import Link from "next/link";
+const DashboardMessages = dynamic(() =>
+  import("../../components/admin/DashboardMessages")
+);
+import DashboardMenu from "../../components/admin/DashboardMenu";
 
 export default function dashboard(props) {
-  const [auth, setAuth] = useContext(AuthContext);
   const requests = props.requests;
   const contactMessages = props.contactMessages;
 
@@ -27,99 +27,15 @@ export default function dashboard(props) {
       <TopCover img={heroImg.src} size="small">
         <Heading text="Dashboard" size={1} />
       </TopCover>
-      {auth ? (
-        <section className="dashboard__wrapper">
-          <section className="dashboard__menu">
-            <div className="dashboard__edit">
-              <ButtonLink
-                text="Edit a hotel"
-                style="primary"
-                link="/admin/edit-hotel"
-              />
-            </div>
-            <div className="dashboard__add">
-              <ButtonLink
-                text="Add new hotel"
-                style="success"
-                link="/admin/add-new"
-                left
-              />
-            </div>
-          </section>
-          {/* <Heading text="Messages" size={2} /> */}
-          <div className="dashboard__messages">
-            <section className="dashboard__admin-messages">
-              <Heading text="Contact messages" size={3} />
-              {contactMessages.map((message) => {
-                return (
-                  <Message
-                    key={message.id}
-                    content={message}
-                    auth={auth}
-                    API={props.API}
-                  >
-                    <Heading text={message.name} size={4} />
-                    <p>
-                      <Link href={`mailto:${message.email}`}>
-                        {message.email}
-                      </Link>
-                    </p>
-                  </Message>
-                );
-              })}
-            </section>
-            <section className="dashboard__hotel-requests">
-              <Heading text="Hotel requests" size={3} />
-              {requests.map((request) => {
-                return (
-                  <Message
-                    key={request.id}
-                    content={request}
-                    auth={auth}
-                    API={props.API}
-                  >
-                    <table>
-                      <tbody>
-                        <tr>
-                          <th>Name</th>
-                          <th>Regarding</th>
-                          <th>Time period</th>
-                        </tr>
-                        <tr>
-                          <td className="message__name">{request.name}</td>
-                          <td className="message__room">{request.roomName}</td>
-                          <td className="message__stay-dates">
-                            {request.checkIn} -
-                            <br />
-                            {request.checkOut}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Adults</th>
-                          <th>Children</th>
-                        </tr>
-                        <tr>
-                          <td className="message__adults">
-                            {request.guests.adults}
-                          </td>
-                          <td className="message__children">
-                            {request.guests.children}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </Message>
-                );
-              })}
-            </section>
-          </div>
-        </section>
-      ) : (
-        <section>
-          <p>You are not authorized to view this page. Please log in.</p>
-          <LoginForm API={props.API} />
-        </section>
-      )}
+
+      <section className="dashboard__wrapper">
+        <DashboardMenu />
+        <DashboardMessages
+          contactMessages={contactMessages}
+          requests={requests}
+          API={props.API}
+        />
+      </section>
     </Layout>
   );
 }

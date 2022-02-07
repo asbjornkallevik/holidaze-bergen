@@ -1,6 +1,5 @@
 import { API } from "../../constants/api";
-import { useContext, useEffect } from "react";
-import AuthContext from "../../context/AuthContext";
+
 import axios from "axios";
 
 import Layout from "../../components/layout/Layout";
@@ -9,39 +8,23 @@ import Heading from "../../components/typography/Heading";
 
 import heroImg from "../../public/images/cover/bergen_brygge_banner_1920.jpg";
 import TopCover from "../../components/blocks/TopCover";
-import Message from "../../components/admin/Message";
-import ButtonLink from "../../components/blocks/ButtonLink";
-import LoginForm from "../../components/forms/LoginForm";
-import AddNewHotel from "../../components/forms/AddNewHotel";
-import EditSelectBox from "../../components/forms/EditSelectBox";
+
+import EditHotel from "../../components/admin/EditHotel";
 
 export default function editHotel(props) {
-  const [auth, setAuth] = useContext(AuthContext);
   return (
     <Layout page="edit-hotel">
       <Head title="Edit hotel" />
       <TopCover img={heroImg.src} size="small">
         <Heading text="Edit hotel" size={1} />
       </TopCover>
-      {auth ? (
-        <section className="add-new__wrapper">
-          <EditSelectBox hotels={props.hotels}>
-            <div id="hotelToEdit" data-id={0}></div>
-            <div>
-              <p className="edit-hotel__load-error error-message"></p>
-            </div>
-            <AddNewHotel
-              API={props.API}
-              media={props.mediaLibrary}
-              categories={props.categories}
-              hotels={props.hotels}
-              editMode={true}
-            />
-          </EditSelectBox>
-        </section>
-      ) : (
-        <p>You are not authorized to do this</p>
-      )}
+      <EditHotel
+        API={props.API}
+        media={props.mediaLibrary}
+        categories={props.categories}
+        hotels={props.hotels}
+        editMode={true}
+      />
     </Layout>
   );
 }

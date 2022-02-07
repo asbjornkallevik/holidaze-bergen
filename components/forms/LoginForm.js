@@ -29,7 +29,7 @@ export default function LoginForm(props) {
     resolver: yupResolver(schema),
   });
 
-  const [auth, setAuth] = useContext(AuthContext);
+  const [, setAuth] = useContext(AuthContext);
 
   async function onSubmit(data) {
     setSubmitting(true);
@@ -39,8 +39,11 @@ export default function LoginForm(props) {
       const response = await axios.post(authUrl, data);
 
       setAuth(response.data);
-
-      router.push("/admin/dashboard");
+      if (router.pathname == "/admin/dashboard") {
+        location.reload();
+      } else {
+        router.push("/admin/dashboard");
+      }
     } catch (error) {
       console.log("Error: ", error);
       setLoginError("Login error. Please check your username and password");

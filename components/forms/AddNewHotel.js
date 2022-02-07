@@ -17,6 +17,8 @@ export default function AddNewHotel(props) {
   const mediaUrl = props.API.API_URL + props.API.MEDIA_ENDPOINT;
   const accommodationUrl = props.API.API_URL + props.API.ACCOMMODATION_ENDPOINT;
 
+  const [requestSuccess, setRequestSuccess] = useState(0);
+
   // Validation schema
 
   let schema = yup.object().shape({
@@ -141,76 +143,96 @@ export default function AddNewHotel(props) {
     return roomFields;
   }
 
-  useEffect(function () {
-    const hotelInputForm = document.querySelector("#hotelInputForm");
-    const selectFeaturedImage = document.querySelector("#featuredImage");
-    const selectCategory = document.querySelector("#categories");
-    const checkFacilities = document.querySelector("#checkFacilities");
-    const addRoom = document.querySelector("#addRoom");
-    const removeRoom = document.querySelector("#removeRoom");
-    const getHotelId = document.querySelector("#hotelToEdit");
+  useEffect(
+    function () {
+      const hotelInputForm = document.querySelector("#hotelInputForm");
+      const selectFeaturedImage = document.querySelector("#featuredImage");
+      const selectCategory = document.querySelector("#categories");
+      const checkFacilities = document.querySelector("#checkFacilities");
+      const addRoom = document.querySelector("#addRoom");
+      const removeRoom = document.querySelector("#removeRoom");
+      const getHotelId = document.querySelector("#hotelToEdit");
 
-    if (props.editMode) {
-      setHotelToEdit(getHotelId);
-    }
+      const form = document.querySelector(".form");
+      const formSuccess = document.querySelector(".form__success");
+      const formError = document.querySelector(".form__error");
 
-    // Populate image options in form
-    selectFeaturedImage.innerHTML = `<option value=''>Select an image</option>
-      `;
-    for (let i = 0; i < props.media.length; i++) {
-      const option = document.createElement("option");
-
-      option.setAttribute("value", props.media[i].id);
-      option.innerHTML = `${props.media[i].title.rendered}`;
-
-      selectFeaturedImage.appendChild(option);
-    }
-
-    // Show preview image
-    selectFeaturedImage.addEventListener("change", () => {
-      const id = selectFeaturedImage.value;
-      setPreviewImageID(id);
-
-      if (id) {
-        const image = props.media.filter((items) => {
-          return items.id == id;
-        });
-        const imageUrl = image[0].source_url;
-        setPreviewImageUrl(imageUrl);
+      // Display success text for message sent
+      if (requestSuccess === 1) {
+        formSuccess.classList.add("show");
+        formError.classList.remove("show");
+        form.reset();
+      } else if (requestSuccess === 2) {
+        formSuccess.classList.remove("show");
+        formError.classList.add("show");
+      } else {
+        formSuccess.classList.remove("show");
+        formError.classList.remove("show");
       }
-    });
 
-    // Populate categories in form
-    selectCategory.innerHTML = `<option value=''>Select a category</option>
+      if (props.editMode) {
+        setHotelToEdit(getHotelId);
+      }
+
+      // Populate image options in form
+      selectFeaturedImage.innerHTML = `<option value=''>Select an image</option>
       `;
-    for (let i = 0; i < props.categories.length; i++) {
-      const option = document.createElement("option");
+      for (let i = 0; i < props.media.length; i++) {
+        const option = document.createElement("option");
 
-      option.setAttribute("value", props.categories[i].id);
-      option.innerHTML = `${props.categories[i].name}`;
+        option.setAttribute("value", props.media[i].id);
+        option.innerHTML = `${props.media[i].title.rendered}`;
 
-      selectCategory.appendChild(option);
-    }
-    if (roomAmount === 1) {
-      removeRoom.style.display = "none";
-    }
+        selectFeaturedImage.appendChild(option);
+      }
 
-    // Add or remove room fields
-    addRoom.addEventListener("click", (e) => {
-      e.preventDefault();
-      setRoomAmount((roomAmount += 1));
-      removeRoom.style.display = "block";
-    });
-    removeRoom.addEventListener("click", (e) => {
-      e.preventDefault();
-      setRoomAmount((roomAmount -= 1));
-      if (roomAmount < 2) {
+      // Show preview image
+      selectFeaturedImage.addEventListener("change", () => {
+        const id = selectFeaturedImage.value;
+        setPreviewImageID(id);
+
+        if (id) {
+          const image = props.media.filter((items) => {
+            return items.id == id;
+          });
+          const imageUrl = image[0].source_url;
+          setPreviewImageUrl(imageUrl);
+        }
+      });
+
+      // Populate categories in form
+      selectCategory.innerHTML = `<option value=''>Select a category</option>
+      `;
+      for (let i = 0; i < props.categories.length; i++) {
+        const option = document.createElement("option");
+
+        option.setAttribute("value", props.categories[i].id);
+        option.innerHTML = `${props.categories[i].name}`;
+
+        selectCategory.appendChild(option);
+      }
+      if (roomAmount === 1) {
         removeRoom.style.display = "none";
       }
-    });
 
-    return () => {};
-  }, []);
+      // Add or remove room fields
+      addRoom.addEventListener("click", (e) => {
+        e.preventDefault();
+        setRoomAmount((roomAmount += 1));
+        removeRoom.style.display = "block";
+      });
+      removeRoom.addEventListener("click", (e) => {
+        e.preventDefault();
+        setRoomAmount((roomAmount -= 1));
+        if (roomAmount < 2) {
+          removeRoom.style.display = "none";
+        }
+      });
+
+      return () => {};
+    },
+    [requestSuccess]
+  );
 
   async function onSubmit(data) {
     const rooms = data.rooms.slice(0, roomAmount);
@@ -284,13 +306,27 @@ export default function AddNewHotel(props) {
           originalRooms
         );
 
-        const response = await http.put(
-          accommodationUrl + hotelID,
-          editAccommodation
-        );
+        const response = await http
+          .put(accommodationUrl + hotelID, editAccommodation)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              setRequestSuccess(1);
+            } else {
+              setRequestSuccess(2);
+            }
+          });
       } else {
         // Post new hotel
-        const response = await http.post(accommodationUrl, accommodation);
+        const response = await http
+          .post(accommodationUrl, accommodation)
+          .then((response) => {
+            if (response.status === 201) {
+              setRequestSuccess(1);
+            } else {
+              setRequestSuccess(2);
+            }
+          });
       }
     } catch (error) {
     } finally {
@@ -508,7 +544,7 @@ export default function AddNewHotel(props) {
           />
         </div>
 
-        <div className="form__success">New hotel is now created.</div>
+        <div className="form__success">Hotel details has been saved.</div>
         <div className="form__error">
           Something went wrong.
           <br /> Please try again later.

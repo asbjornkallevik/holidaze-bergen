@@ -189,6 +189,6 @@ export default function Message(props) {
 Message.propTypes = {
   content: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object,
   API: PropTypes.object.isRequired,
 };

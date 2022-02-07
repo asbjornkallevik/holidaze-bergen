@@ -83,6 +83,7 @@ export default function Header() {
         // Log out
         logoutBtn.addEventListener("click", () => {
           setAuth(null);
+          router.push("/");
           setTimeout(() => {
             loginBtn.classList.add("show");
             logoutBtn.classList.remove("show");
