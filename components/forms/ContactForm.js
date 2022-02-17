@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 
 import Button from "../blocks/Button";
+import Spinner from "../blocks/Spinner";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -33,6 +34,7 @@ export default function HotelRequestForm({ API }) {
   const [requestSuccess, setRequestSuccess] = useState(0);
   const [formReset, setFormReset] = useState(false);
   const [showSubmit, setShowSubmit] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [auth, setAuth] = useContext(AuthContext);
   const [guestLogin, setGuestLogin] = useState(false);
   const http = useAxios();
@@ -93,6 +95,7 @@ export default function HotelRequestForm({ API }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   async function onSubmit(data) {
+    setLoading(true);
     // Check authorization
     if (!auth) {
       guestAuth(API.GUEST_USER);
@@ -123,6 +126,7 @@ export default function HotelRequestForm({ API }) {
     } finally {
       //   setFormReset(true);
       setAuth(null);
+      setLoading(false);
     }
   }
 
@@ -178,6 +182,7 @@ export default function HotelRequestForm({ API }) {
         {/* Submit button */}
         {showSubmit ? (
           <div className="form__submit">
+            {loading ? <Spinner width={40} /> : ""}
             <Button
               text="Send"
               style="success"
@@ -185,6 +190,7 @@ export default function HotelRequestForm({ API }) {
               type="submit"
               short
             />
+
             {/* <input type="submit"></input> */}
           </div>
         ) : (

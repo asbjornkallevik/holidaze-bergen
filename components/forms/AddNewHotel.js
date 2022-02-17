@@ -11,13 +11,14 @@ import Image from "next/image";
 
 import Heading from "../typography/Heading";
 import Button from "../blocks/Button";
-import Link from "next/link";
+import Spinner from "../blocks/Spinner";
 
 export default function AddNewHotel(props) {
   const mediaUrl = props.API.API_URL + props.API.MEDIA_ENDPOINT;
   const accommodationUrl = props.API.API_URL + props.API.ACCOMMODATION_ENDPOINT;
 
   const [requestSuccess, setRequestSuccess] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   // Validation schema
 
@@ -235,6 +236,7 @@ export default function AddNewHotel(props) {
   );
 
   async function onSubmit(data) {
+    setLoading(true);
     const rooms = data.rooms.slice(0, roomAmount);
     // console.log(data);
 
@@ -330,6 +332,7 @@ export default function AddNewHotel(props) {
       }
     } catch (error) {
     } finally {
+      setLoading(false);
     }
   }
 
@@ -535,13 +538,17 @@ export default function AddNewHotel(props) {
 
         {/* Submit button */}
         <div className="form__submit" type="submit">
-          <Button
-            text="Save"
-            style="success"
-            id="formSubmit"
-            type="submit"
-            short
-          />
+          {loading ? (
+            <Spinner width={40} />
+          ) : (
+            <Button
+              text="Save"
+              style="success"
+              id="formSubmit"
+              type="submit"
+              short
+            />
+          )}
         </div>
 
         <div className="form__success">Hotel details has been saved.</div>

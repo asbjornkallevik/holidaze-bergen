@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 import Button from "../blocks/Button";
+import Spinner from "../blocks/Spinner";
 
 const schema = yup.object().shape({
   username: yup.string().required("Please enter username"),
@@ -90,7 +91,12 @@ export default function LoginForm(props) {
         </div>
 
         <div className="form__submit" type="submit">
-          <Button text="Log in" style="" id="formSubmit" type="submit" />
+          {submitting ? (
+            <Spinner width={40} />
+          ) : (
+            <Button text="Log in" style="" id="formSubmit" type="submit" />
+          )}
+
           {/* <input type="submit"></input> */}
         </div>
       </form>

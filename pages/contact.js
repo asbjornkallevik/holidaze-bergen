@@ -10,6 +10,8 @@ import bergenBrygge from "../public/images/bergen-brygge.jpg";
 import TopCover from "../components/blocks/TopCover";
 import ContactForm from "../components/forms/ContactForm";
 
+import Spinner from "../components/blocks/Spinner";
+
 export default function contact(props) {
   return (
     <Layout page="contact">

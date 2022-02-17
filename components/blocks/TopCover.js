@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
+import Spinner from "./Spinner";
 
 function TopCover({ children, img, size, video }) {
   const overlayClass = video ? "video-overlay" : "";
   return (
     <div className={`top-cover top-cover--${size} alignfull`} role="banner">
+      <Spinner width={200} />
       <Image
         src={img}
         layout="fill"
@@ -14,7 +16,6 @@ function TopCover({ children, img, size, video }) {
       />
       {/* Display hero video if provided */}
       {video ? <video autoPlay={true} muted loop src={video} /> : ""}
-
       <div className={`top-cover__inner-container ${overlayClass}`}>
         {children}
       </div>

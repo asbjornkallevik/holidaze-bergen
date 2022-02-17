@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 
 import Button from "../blocks/Button";
+import Spinner from "../blocks/Spinner";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -30,8 +31,10 @@ export default function HotelRequestForm({ hotel, API }) {
 
   const [requestSuccess, setRequestSuccess] = useState(0);
   const [auth, setAuth] = useContext(AuthContext);
-  const [formReset, setFormReset] = useState(false);
+
   const [showSubmit, setShowSubmit] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [guestLogin, setGuestLogin] = useState(false);
   const http = useAxios();
 
   let rooms = "";
@@ -79,7 +82,11 @@ export default function HotelRequestForm({ hotel, API }) {
         formError.classList.remove("show");
       }
 
-      if (formReset) {
+      if (guestLogin) {
+        // Submit form
+        const submitButton = document.querySelector("#formSubmit");
+        submitButton.click();
+        setGuestLogin(false);
         form.reset();
       }
 
@@ -87,7 +94,7 @@ export default function HotelRequestForm({ hotel, API }) {
         setRequestSuccess(0);
       }); */
     },
-    [requestSuccess, hotel.rooms, formReset]
+    [requestSuccess, hotel.rooms, auth]
   );
 
   const {
@@ -97,6 +104,12 @@ export default function HotelRequestForm({ hotel, API }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   async function onSubmit(data) {
+    setLoading(true);
+    // Check authorization
+    if (!auth) {
+      guestAuth(API.GUEST_USER);
+      setGuestLogin(true);
+    }
     const roomName = data.room
       ? hotel.rooms[parseInt(data.room)].accommodation_rooms_name
       : hotel.rooms[0].accommodation_rooms_name;
@@ -119,11 +132,6 @@ export default function HotelRequestForm({ hotel, API }) {
     };
 
     try {
-      // Check authorization
-      if (!auth) {
-        guestAuth(API.GUEST_USER);
-      }
-
       const response = await http
         .post(requestUrl, hotelRequest)
         .then((response) => {
@@ -138,8 +146,8 @@ export default function HotelRequestForm({ hotel, API }) {
       // console.log(login.data);
     } catch (error) {
     } finally {
-      setFormReset(true);
       setAuth(null);
+      setLoading(false);
     }
   }
 
@@ -285,6 +293,7 @@ export default function HotelRequestForm({ hotel, API }) {
         {/* Submit button */}
         {showSubmit ? (
           <div className="form__submit" type="submit">
+            {loading ? <Spinner width={40} /> : ""}
             <Button
               text="Send"
               style="success"
